@@ -6,7 +6,11 @@
 \usepackage{multicol}
 \usepackage{caption}
 \usepackage{subcaption}
-
+\lstset{
+basicstyle=\small\ttfamily,
+columns=flexible,
+breaklines=true
+}
 \newcommand{\beginsupplement}{%
         \setcounter{table}{0}
         \renewcommand{\thetable}{S\arabic{table}}%
@@ -16,23 +20,23 @@
 
 \title{Comparative Annotation Toolkit (CAT) - simultaneous annotation of related genomes}
 
-\author[1,]{Ian Fiddes}
+\author[1]{Ian Fiddes}
 \author[1,*]{Joel Armstrong}
 \author[1,*]{Mark Diekhans}
 \author[2,*]{Stefanie Nacthweide}
-\author[3,]{Zev Kronenberg}
+\author[3]{Zev Kronenberg}
 \author[4,5]{Jason Underwood}
-\author[7,]{Thomas Keane}
+\author[6]{Thomas Keane}
 \author[3,4]{Evan Eichler}
-\author[1,]{David Haussler}
-\author[6,]{Mario Stanke}
+\author[1]{David Haussler}
+\author[2]{Mario Stanke}
 \author[1,+]{Benedict Paten}
 \affil[1]{Genomics Institute, University of California Santa Cruz and Howard Hughes Medical Institute, Santa Cruz, CA 95064, USA}
+\affil[2]{Institute of Mathematics and Computer Science, University of Greifswald, Domstraße 11, Germany}
 \affil[3]{Department of Genome Sciences, University of Washington School of Medicine, Seattle, WA 98195, USA}
 \affil[4]{Howard Hughes Medical Institute, University of Washington, Seattle, WA 98195, USA}
 \affil[5]{Pacific Biosciences of California, Inc., Menlo Park, CA 94025, USA}
-\affil[6]{Institute of Mathematics and Computer Science, University of Greifswald, Domstraße 11, Germany}
-\affil[7]{European Bioinformatics Institute, Wellcome Genome Campus, Hinxton CB10 1SD, UK}
+\affil[6]{European Bioinformatics Institute, Wellcome Genome Campus, Hinxton CB10 1SD, UK}
 
 \affil[+]{Corresponding author. Email: bpaten@soe.ucsc.edu}
 
@@ -50,11 +54,11 @@ The recent introductions of low-cost, long-read and read-cloud sequencing techno
 \thispagestyle{empty}
 
 \section*{Introduction}
-	We are entering a new era of genome assembly, an era in which high-quality vertebrate and plant sized genome assemblies can be created for many orders of magnitude less money than the original major reference sequencing projects. Short read sequencing prices continue to drop, and new technologies are being developed which move past the shortcomings of short read technologies to produce high quality assemblies \cite{putnam2016chromosome,10xassembly,Jain128835}. Long read technologies are being leveraged to produce assemblies of quality comparable to those produced through intensive manual curation \cite{gordon2016long}. These advances have allowed researchers to perform clade genomics, producing assemblies for many members of a single species or related species \cite{Thybert158659,jarvis2014whole}. These advances are required for the ambitious goals of projects such as Genome 10K \cite{haussler2009genome} and Insect 5K, which aim to produce thousands of assemblies for key representative species. In addition, efforts are growing to produce de-novo assemblies of individual humans to evaluate the human health implications of structural variation and variation within regions not accessible with reference assisted approaches. 
+	We are entering a new era of genome assembly, an era in which high-quality vertebrate and plant sized genome assemblies can be created for many orders of magnitude less money than the original major reference sequencing projects. Short read sequencing prices continue to drop, and new technologies are being developed which move past the shortcomings of short read technologies to produce high quality assemblies \cite{putnam2016chromosome,10xassembly,Jain128835}. Long read technologies are being leveraged to produce assemblies of quality comparable to those produced through intensive manual curation \cite{gordon2016long} (Kronenberg et al., submitted). These advances have allowed researchers to perform clade genomics, producing assemblies for many members of a single species or related species \cite{Thybert158659,jarvis2014whole}. These advances are required for the ambitious goals of projects such as Genome 10K \cite{haussler2009genome} and Insect 5K, which aim to produce thousands of assemblies for key representative species. In addition, efforts are growing to produce \textit{de-novo} assemblies of individual humans to evaluate the human health implications of structural variation and variation within regions not accessible with reference assisted approaches. 
     
-These advances in genome assembly require subsequent advances in genome comparison. Central to this comparison is annotation. The challenge of finding functional elements in genome assemblies has been considered for at least the past 20 years \cite{haussler1996generalized}. This problem is traditionally approached by \textit{ab initio} prediction (using statistical models of sequence composition) \cite{stanke2004augustus} and sequence alignment of known mRNAs or proteins\cite{Aken01012016}. The former has limited accuracy while the latter is limited by the existence of useful sequence information. As phylogenetic distance increases, errors resulting from genetic divergence increase. Annotation pipelines such as MAKER \cite{cantarel2008maker}, RefSeq \cite{pruitt2006ncbi} and AUGUSTUS \cite{stanke2006gene} make use of both sequence alignment and \textit{ab initio} prediction approaches. See \cite{hoff2015current} for a recent review of genome annotation methods. 
+These advances in genome assembly require subsequent advances in genome comparison. Central to this comparison is annotation. The challenge of finding functional elements in genome assemblies has been considered for at least the past 20 years \cite{haussler1996generalized}. This problem is traditionally approached by \textit{ab initio} prediction (using statistical models of sequence composition) \cite{stanke2004augustus} and sequence alignment of known mRNAs or proteins\cite{Aken01012016}. The former has limited accuracy while the latter is limited by the existence of useful sequence information. As phylogenetic distance increases, errors resulting from genetic divergence increase. Annotation pipelines such as MAKER \cite{cantarel2008maker}, RefSeq \cite{pruitt2006ncbi} and AUGUSTUS \cite{stanke2006gene} make use of both sequence alignment and \textit{ab-initio} prediction approaches. See \cite{hoff2015current} for a recent review of genome annotation methods. 
 
-A huge amount of effort has gone into the annotation of model organisms, in particular human and mouse. For the past five years, the GENCODE Consortium \cite{harrow2012gencode} has used a wide range of sequencing and phylogenetic information to manually build and curate comprehensive annotation sets, with over 43,281 and 60,297 ORFs in mouse and human, respectively. The GENCODE databases give a glimpse into the diversity of alternative isoforms and non-coding transcripts present in vertebrate genomes. Similarly, efforts in other model organisms such as zebrafish \cite{westerfield1998zebrafish}, C. elegans \cite{stein2001wormbase}, A. thaliana \cite{swarbreck2008arabidopsis} and many others, have produced high quality annotation sets for their respective assemblies.
+A huge amount of effort has gone into the annotation of model organisms, in particular human and mouse. For the past five years, the GENCODE Consortium \cite{harrow2012gencode} has used a wide range of sequencing and phylogenetic information to manually build and curate comprehensive annotation sets, with over 43,281 and 60,297 ORFs in mouse and human, respectively. The GENCODE databases give a glimpse into the diversity of alternative isoforms and non-coding transcripts present in vertebrate genomes. Similarly, efforts in other model organisms such as zebrafish \cite{westerfield1998zebrafish}, \textit{C. elegans} \cite{stein2001wormbase}, \textit{A. thaliana} \cite{swarbreck2008arabidopsis} and many others, have produced high quality annotation sets for their respective assemblies.
 
 As we enter a second era of genome assembly, consideration must also be given to annotating this explosion of assembled, high-quality genomes. Here, we present a method and toolkit to make use of multiple genome alignments produced by progressiveCactus \cite{paten2011cactus} containing one or more previously annotated genomes to simultaneously project well curated annotations onto the lesser studied genomes. In contrast to most earlier alignment methods \cite{blanchette2004aligning,earl2014alignathon,miller200728}, progressiveCactus alignments are not-reference based, include duplications, and are thus suitable for the annotation of many-to-many orthology relationships. We show how the output of this projected annotation set can be cleaned up and filtered through special application of AUGUSTUS \cite{stanke2008using}, and how novel information can be introduced by combining the transitive annotation set with predictions produced by Comparative Augustus \cite{konig2015simultaneous}. These predictions can be further supplemented and validated by incorporating long range RNA-sequencing data such as those generated by the IsoSeq protocol \cite{gordon2015widespread}. We provide a fully featured annotation pipeline, the Comparative Annotation Toolkit (CAT), that can perform this annotation process reproducibly on any combination of a local computer, a compute cluster, or on the cloud with either Amazon Web Services (AWS) or Microsoft Azure. We show that this pipeline can be applied to a wide range of genetic distances, from distant members of the same clade to individualized assemblies of the same species.
 
@@ -148,25 +152,25 @@ https://github.com/glennhickey/progressiveCactus
 
 commit 91d6344. For the mouse-rat alignment the guide tree was 
 
-\begin{lstlisting}[breaklines=true]
-(((Lesser_Egyptian_jerboa:0.1,(Mouse:0.084509,Rat:0.091589)mouse_rat:0.107923)rodent:0.148738,Rabbit:0.21569)glires:0.015313,Human:0.143908)root;
+\begin{lstlisting}
+(((Lesser_Egyptian_jerboa:0.1,(Mouse:0.084509,Rat:0.091589)mouse_rat:0.107923)rodent:0.148738,Rabbit:0.21569)glires:0.015313,Human:0.143908);
 \end{lstlisting}
     
 For the primate alignments, the guide tree was 
     
-\begin{lstlisting}[breaklines=true]
-(((((((Susie_Gorilla:0.008964,(Human:0.00655,Clint_Chimp:0.00684)human_chimp:0.00122)gorilla_chimp_human:0.009693,Susie_Orangutan:0.01894)great_ape:0.003471,Gibbon:0.02227)great_ape_gibbon:0.01204,Rhesus:0.004991)old_world_monkey:0.02183,Squirrel_monkey:0.01035)monkey:0.05209,Bushbaby:0.1194)primate_anc:0.013494,Mouse:0.084509)root;
+\begin{lstlisting}
+(((((((Susie_Gorilla:0.008964,(Human:0.00655,Clint_Chimp:0.00684)human_chimp:0.00122)gorilla_chimp_human:0.009693,Susie_Orangutan:0.01894)great_ape:0.003471,Gibbon:0.02227)great_ape_gibbon:0.01204,Rhesus:0.004991)old_world_monkey:0.02183,Squirrel_monkey:0.01035)monkey:0.05209,Bushbaby:0.1194)primate_anc:0.013494,Mouse:0.084509);
 \end{lstlisting}
     
-An identical tree was used for the alignment of current reference great apes. For the pseudo-diploid human alignment, the guide tree was 
+An identical tree (with different assembly names) was used for the alignment of current reference great apes. For the pseudo-diploid human alignment, the guide tree was 
     
-\begin{lstlisting}[breaklines=true]
+\begin{lstlisting}
 ((hg38:0.001,chm1:0.001,chm13:0.001)human:0.01,chimp:0.01);
 \end{lstlisting}
     
 representing a star phylogeny of the three human assemblies. For the 14-way mammal alignment, the progressiveCactus commit used was e3c6055 and the guide tree was 
     
-\begin{lstlisting}[breaklines=true]
+\begin{lstlisting}
 ((((oryCun2:0.21,((Pahari_EiJ:0.03,mm10:0.025107)1:0.02,rn6:0.013)1:0.252)1:0.01,((((hg19:0.00642915,panTro4:0.00638042)1:0.00217637,gorGor3:0.00882142)1:0.00935116,ponAbe2:0.0185056)1:0.00440069,rheMac3:0.007)1:0.1)1:0.02,((oviAri3:0.019,bosTau8:0.0506)1:0.17,(canFam3:0.11,felCat8:0.08)1:0.06)1:0.02)1:0.02,loxAfr3:0.15);
 \end{lstlisting}
     
@@ -183,7 +187,7 @@ CAT is relatively efficient, taking on the order of thousands of core hours to r
 Running CAT on the PacBio primate genomes took a total of 7,030 core hours, with 3,437 of those dedicated to running AugustusTMR, 1,191 dedicated to running AugustusPB, and 2,190 dedicated to running AugustusCGP. Running CAT on the 14-way mammalian alignment took a total of 24,122 core hours, with 14,045 of those dedicated to running AugustusTMR, and 8,225 dedicated to running AugustusCGP.
 
 \section*{Acknowledgements}
-We would like to thank David Gordon for developing the indel error correction approach, Brian Raney, Hiram Clawson and the rest of the UCSC Browser team for help creating browser tracks.
+We would like to thank David Gordon for developing the indel error correction approach, Brian Raney, Hiram Clawson and the rest of the UCSC Browser team for help creating browser tracks, and Dent Earl, whose work led to this project. We also would like to thank Fergal Martin and Paul Flicek for revising the paper and providing a pre-release of the Ensembl V91 annotations on chimpanzee and gorilla.
 
 \bibliography{references}
 \clearpage
