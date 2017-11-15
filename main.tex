@@ -6,6 +6,7 @@
 \usepackage{multicol}
 \usepackage{caption}
 \usepackage{subcaption}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \lstset{
 basicstyle=\small\ttfamily,
 columns=flexible,
@@ -20,14 +21,15 @@ breaklines=true
 
 \title{Comparative Annotation Toolkit (CAT) - simultaneous annotation of related genomes}
 
-\author[1]{Ian Fiddes}
+\author[1]{Ian T. Fiddes}
 \author[1,*]{Joel Armstrong}
 \author[1,*]{Mark Diekhans}
 \author[2,*]{Stefanie Nacthweide}
 \author[3]{Zev Kronenberg}
 \author[4,5]{Jason Underwood}
+\author[3,4]{David Gordon}
 \author[6]{Thomas Keane}
-\author[3,4]{Evan Eichler}
+\author[3,4]{Evan E. Eichler}
 \author[1]{David Haussler}
 \author[2]{Mario Stanke}
 \author[1,+]{Benedict Paten}
@@ -54,13 +56,15 @@ The recent introductions of low-cost, long-read and read-cloud sequencing techno
 \thispagestyle{empty}
 
 \section*{Introduction}
-	We are entering a new era of genome assembly, an era in which high-quality vertebrate and plant sized genome assemblies can be created for many orders of magnitude less money than the original major reference sequencing projects. Short read sequencing prices continue to drop, and new technologies are being developed which move past the shortcomings of short read technologies to produce high quality assemblies \cite{putnam2016chromosome,10xassembly,Jain128835}. Long read technologies are being leveraged to produce assemblies of quality comparable to those produced through intensive manual curation \cite{gordon2016long} (Kronenberg et al., submitted). These advances have allowed researchers to perform clade genomics, producing assemblies for many members of a single species or related species \cite{Thybert158659,jarvis2014whole}. These advances are required for the ambitious goals of projects such as Genome 10K \cite{haussler2009genome} and Insect 5K, which aim to produce thousands of assemblies for key representative species. In addition, efforts are growing to produce \textit{de-novo} assemblies of individual humans to evaluate the human health implications of structural variation and variation within regions not accessible with reference assisted approaches. 
+	We are entering a new era of genome assembly, an era in which high-quality vertebrate and plant sized genome assemblies can be created for many orders of magnitude less money than the original major reference sequencing projects. Short read sequencing prices continue to drop, and new technologies are being developed which move past the shortcomings of short read technologies to produce high quality assemblies \cite{putnam2016chromosome,10xassembly,Jain128835,chaisson2015genetic}. Long read technologies are being leveraged to produce assemblies of quality comparable to those produced through intensive manual curation \cite{gordon2016long} (Kronenberg et al., submitted). These advances have allowed researchers to perform clade genomics, producing assemblies for many members of a single species or related species \cite{Thybert158659,jarvis2014whole}. These advances are required for the ambitious goals of projects such as Genome 10K \cite{haussler2009genome} and Insect 5K, which aim to produce thousands of assemblies for key representative species. In addition, efforts are growing to produce \textit{de-novo} assemblies of individual humans to evaluate the human health implications of structural variation and variation within regions not accessible with reference assisted approaches. 
     
 These advances in genome assembly require subsequent advances in genome comparison. Central to this comparison is annotation. The challenge of finding functional elements in genome assemblies has been considered for at least the past 20 years \cite{haussler1996generalized}. This problem is traditionally approached by \textit{ab initio} prediction (using statistical models of sequence composition) \cite{stanke2004augustus} and sequence alignment of known mRNAs or proteins\cite{Aken01012016}. The former has limited accuracy while the latter is limited by the existence of useful sequence information. As phylogenetic distance increases, errors resulting from genetic divergence increase. Annotation pipelines such as MAKER \cite{cantarel2008maker}, RefSeq \cite{pruitt2006ncbi} and AUGUSTUS \cite{stanke2006gene} make use of both sequence alignment and \textit{ab-initio} prediction approaches. See \cite{hoff2015current} for a recent review of genome annotation methods. 
 
 A huge amount of effort has gone into the annotation of model organisms, in particular human and mouse. For the past five years, the GENCODE Consortium \cite{harrow2012gencode} has used a wide range of sequencing and phylogenetic information to manually build and curate comprehensive annotation sets, with over 43,281 and 60,297 ORFs in mouse and human, respectively. The GENCODE databases give a glimpse into the diversity of alternative isoforms and non-coding transcripts present in vertebrate genomes. Similarly, efforts in other model organisms such as zebrafish \cite{westerfield1998zebrafish}, \textit{C. elegans} \cite{stein2001wormbase}, \textit{A. thaliana} \cite{swarbreck2008arabidopsis} and many others, have produced high quality annotation sets for their respective assemblies.
 
-As we enter a second era of genome assembly, consideration must also be given to annotating this explosion of assembled, high-quality genomes. Here, we present a method and toolkit to make use of multiple genome alignments produced by progressiveCactus \cite{paten2011cactus} containing one or more previously annotated genomes to simultaneously project well curated annotations onto the lesser studied genomes. In contrast to most earlier alignment methods \cite{blanchette2004aligning,earl2014alignathon,miller200728}, progressiveCactus alignments are not-reference based, include duplications, and are thus suitable for the annotation of many-to-many orthology relationships. We show how the output of this projected annotation set can be cleaned up and filtered through special application of AUGUSTUS \cite{stanke2008using}, and how novel information can be introduced by combining the transitive annotation set with predictions produced by Comparative Augustus \cite{konig2015simultaneous}. These predictions can be further supplemented and validated by incorporating long range RNA-sequencing data such as those generated by the IsoSeq protocol \cite{gordon2015widespread}. We provide a fully featured annotation pipeline, the Comparative Annotation Toolkit (CAT), that can perform this annotation process reproducibly on any combination of a local computer, a compute cluster, or on the cloud with either Amazon Web Services (AWS) or Microsoft Azure. We show that this pipeline can be applied to a wide range of genetic distances, from distant members of the same clade to individualized assemblies of the same species.
+As we enter a second era of genome assembly, consideration must also be given to annotating this explosion of assembled, high-quality genomes. Traditional genome assembly projects have been conducted by large consortia with sophisticated in-house annotation pipelines. Individual labs or small groups of labs can now feasibly produce high quality genome assemblies, and tools must be created to give these labs opportunities to produce high quality annotation sets on these assemblies.
+
+Here, we present a method and toolkit to make use of multiple genome alignments produced by progressiveCactus \cite{paten2011cactus} containing one or more previously annotated genomes to simultaneously project well curated annotations onto the lesser studied genomes. In contrast to most earlier alignment methods \cite{blanchette2004aligning,earl2014alignathon,miller200728}, progressiveCactus alignments are not-reference based, include duplications, and are thus suitable for the annotation of many-to-many orthology relationships. We show how the output of this projected annotation set can be cleaned up and filtered through special application of AUGUSTUS \cite{stanke2008using}, and how novel information can be introduced by combining the transitive annotation set with predictions produced by Comparative Augustus \cite{konig2015simultaneous}. These predictions can be further supplemented and validated by incorporating long range RNA-sequencing data such as those generated by the IsoSeq protocol \cite{gordon2015widespread}. We provide a fully featured annotation pipeline, the Comparative Annotation Toolkit (CAT), that can perform this annotation process reproducibly on any combination of a local computer, a compute cluster, or on the cloud with either Amazon Web Services (AWS) or Microsoft Azure. We show that this pipeline can be applied to a wide range of genetic distances, from distant members of the same clade to individualized assemblies of the same species.
 
 
 \section*{Results}
@@ -107,7 +111,7 @@ AugustusTMR, which uses TransMap and RNA-seq, provides CAT with a way to improve
 
 \subsection*{CAT annotations over large phylogenetic distance}
 
-To show that CAT can work across large phylogenetic distances, the annotation of human GRCh37 produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set (GENCODE V27lift37). The Jaccard similarity of the CAT annotation to GENCODE annotation set was similar to the similarities seen in the rat comparison (Figure \ref{fig:fig5}C). The two annotation sets were compared using Kallisto using a human iPSC RNA-seq dataset that was not used in the annotation process. Kallisto was able to detect expression of 13,765 protein coding genes and 38,464 protein coding transcripts from the CAT annotation (Figure \ref{fig:fig5}D). The detection of alternative isoforms across large phylogenetic distance can improve comparative genomic analysis in upcoming large scale comparative genomics projects like the Vertebrate Genomes Project.
+To show that CAT can work across large phylogenetic distances, the annotation of human GRCh37 produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set (GENCODE V27lift37). The Jaccard similarity of the CAT annotation to GENCODE annotation set was similar to the similarities seen in the rat comparison (Figure \ref{fig:fig5}C). The two annotation sets were compared using Kallisto using a human iPSC RNA-seq dataset that was not used in the annotation process. Kallisto was able to detect expression of 13,765 protein coding genes and 38,464 protein coding transcripts from the CAT annotation (Figure \ref{fig:fig5}D). Of the 19,233 ICE isoforms detected when running ToFU against hg19, 12,911 (67.15) fuzzy matched a CAT isoform compared to 15,920 (82.8%) of GENCODE V27lift37 (Figure \ref{fig:fig5)E). The detection of alternative isoforms across large phylogenetic distance can improve comparative genomic analysis in upcoming large scale comparative genomics projects like the Vertebrate Genomes Project.
 
 \section*{Discussion}
 Gene annotation is a longstanding and critical task in genome informatics that must now be scaled to handle the rapidly increasing number of available genomes. CAT performs better than existing annotation pipelines by leveraging existing annotation sets, both long and short read RNA-seq data, protein information, and state of the art single- and multi-genome predictions developed by our group. The result is consistent annotation sets of many genomes within a clade with minimal reference bias. This result is clearly shown in the analysis of the rat genome, where more genes and many more transcripts are detectable in RNA expression analysis than when using other annotation methods, including the standard, popular reference annotations from Ensembl and RefSeq.
@@ -118,18 +122,20 @@ CAT provides a framework for leveraging existing high-quality annotation efforts
 
 GENCODE has spent considerable effort over the past few years re-classifying protein-coding loci as pseudogenes, lincRNA and other non-coding biotypes. These false positives are inherent in the nature of gene finding tools, where the likelihood of finding a valid but apparently non-conserved ORF in a given transcribed locus is not small \cite{lin2011phylocsf}. CAT provides a way to bypass this inherent challenge in gene finding by leveraging the existing information in an annotation set like GENCODE. If a transcript’s biotype is incorrect in the input set, CAT currently has no way of re-evaluating this, but in the future we hope to add processed, unprocessed and unitary pseudogene prediction to CAT.
 
-In addition to the annotations reported here, an earlier version of CAT was used to annotate the PacBio based assembly of the gorilla genome \cite{gordon2016long} as well as produce the current Ensembl annotations for 16 laboratory mouse strains as part of the Mouse Genomes Project (http://www.sanger.ac.uk/science/data/mouse-genomes-project).
+CAT is not without limitations. In addition to biotypes, there are trade-offs to be made over genetic distance in regards to conservation of alternative isoforms. Tuning the flags related to RNA-seq support can filter out non-conserved isoforms, but also makes the assumption that the given RNA-seq data are comprehensive. Additionally, at this time, CAT also does not detect the case of gene family collapse, which can lead to overlapping annotations. We also would like to integrate coding potential prediction\cite{lin2011phylocsf} to both our novel predictions as well as projection transcripts. 
+
+CAT works best when provided RNA-seq data, but for many species this may not be possible. From our experience, a reasonable amount (on the order of 50 million reads) of RNA-seq from tissues like brain and liver is fairly informative. Using polyA selected libraries is recommended, as it greatly reduces false positive predictions in AugustusCGP. IsoSeq data allowed for the discovery of thousands of novel isoforms in the great apes, but may be too expensive for other projects. In clade genomics projects, we would suggest generating RNA-seq for a few of the species and then rely on the coordinate mapping that AugustusCGP and homGeneMapping provide to evaluate support in other members of the clade.
+
+File formats can also be a practical limitation. CAT produces annotations in both the genePred and GFF3 format. We have included a script to convert these annotations into a format suitable for submission at NCBI. However, compromises have to be made in how to best represent frame-shifts found relative to the source transcript set that are ambiguous with regards to assembly error or true biology.
+
+An earlier version of CAT was used to annotate the PacBio based assembly of the gorilla genome \cite{gordon2016long} as well as produce the current Ensembl annotations for 16 laboratory mouse strains as part of the Mouse Genomes Project (\url{http://www.sanger.ac.uk/science/data/mouse-genomes-project}).
 
 CAT has been proposed to be a part of the Vertebrate Genomes Project (VGP), which aims as a pilot project to assemble and annotate one member of every order of vertebrate species. CAT also will be used on the 200 Mammals Project, which aims to add ~140 new mammalian genome assemblies to the existing set. These projects will provide a new understanding of gene evolution.
 
 CAT’s current implementation does not attempt to put weights on the features used for constructing a consensus gene set. Instead, it simply scores transcripts based on the sum of all features evaluated. In the future deep learning methods could be added to CAT to construct feature weights and improve consensus finding, and so better mimic the labor intensive efforts of manual annotators who currently weigh such evidence.
 
 \section*{Materials and Methods}
-CAT produces as output a series of diagnostic plots, an annotation set for each target genome, and a UCSC comparative assembly hub \cite{nguyen2014comparative}. Both the pipeline and associated documentation can be found here: 
-
-https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit. 
-
-CAT is constructed using the Luigi (https://github.com/spotify/luigi) workflow manager, with Toil \cite{vivian2017toil} used for computationally intensive steps that work best when submitted to a compute cluster. 
+CAT produces as output a series of diagnostic plots, an annotation set for each target genome, and a UCSC comparative assembly hub \cite{nguyen2014comparative}. Both the pipeline and associated documentation can be found at \url{https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit}. CAT is constructed using the Luigi (\url{https://github.com/spotify/luigi}) workflow manager, with Toil \cite{vivian2017toil} used for computationally intensive steps that work best when submitted to a compute cluster. 
 
 \subsection*{RNA-seq}
 
@@ -140,17 +146,16 @@ In addition, for the PacBio great ape annotation, RNA-seq data were generated us
 For both the rat, primate and mammalian quantifiable expression analysis, Kallisto \cite{bray2015near} was used to quantify the genes and transcripts. For the pairwise analysis of liver RNA-seq, RSEM \cite{li2011rsem} was used. The TPM values of replicates were averaged. The rat Jaccard similarity analysis was performed with bedtools \cite{quinlan2010bedtools}. The rat locus overlap analysis was performed in two steps -- first the transcript sets were clustered using bedtools, and then the resulting clusters broken apart by requiring at least one base of exonic overlap. This process reduces false positives produced by overlapping genes, and resulted in a total of 25,721 clusters from a starting point of 24,225.
 
 \subsection*{IsoSeq}
-IsoSeq full-length non-chimeric reads (FLNC) were also generated from the great ape iPSC lines and aligned with GMAP \cite{wu2005gmap}.To perform isoform level validation in the primates, the IsoSeq data used as input to CAT were also clustered with ICE and then collapsed into isoforms using ToFu \cite{gordon2015widespread}. Ensembl provided a pre-release of their new V91 annotations for panTro4 and gorGor4, but did not yet run their updated pipeline on ponAbe2.
+IsoSeq full-length non-chimeric reads (FLNC) were also generated from the great ape iPSC lines and aligned with GMAP \cite{wu2005gmap}.To perform isoform level validation in the primates, the IsoSeq data used as input to CAT were also clustered with isoform-level clustering (ICE) and then collapsed into isoforms using ToFu \cite{gordon2015widespread}. Ensembl provided a pre-release of their new V91 annotations for panTro4 and gorGor4, but did not yet run their updated pipeline on ponAbe2.
+
+\subsection*{ICE validation}
+The output transcripts from ICE were compared to various annotation sets in both an exact and fuzzy matching scheme. In the exact scheme, the genomic order and positions of all of the introns (an intron chain) of a transcript are compared to any ICE isoforms which overlap it. In the fuzzy matching scheme, each annotated intron chain is allowed to move up to 8 bases in either direction and still be called a match.
 
 \subsection*{BUSCO}
 The mammalian BUSCO analysis was performed using the mammalia\_odb9 set of 4,104 genes. BUSCO was ran against the complete protein coding sequence repertoire produced by CAT in that species in the `protein' mode.
 
 \subsection*{progressiveCactus}
-	All cactus alignments except the 14-way mammal alignment were generated using progressiveCactus 
-    
-https://github.com/glennhickey/progressiveCactus
-
-commit 91d6344. For the mouse-rat alignment the guide tree was 
+	All cactus alignments except the 14-way mammal alignment were generated using progressiveCactus (\url{https://github.com/glennhickey/progressiveCactus}) commit 91d6344. For the mouse-rat alignment the guide tree was 
 
 \begin{lstlisting}
 (((Lesser_Egyptian_jerboa:0.1,(Mouse:0.084509,Rat:0.091589)mouse_rat:0.107923)rodent:0.148738,Rabbit:0.21569)glires:0.015313,Human:0.143908);
@@ -178,16 +183,14 @@ representing a star phylogeny of the three human assemblies. For the 14-way mamm
 Slightly out-of-date versions of some assemblies (hg19 and rheMac3) were used because a collaborator had data on those assemblies that they wished to use the alignment to analyze. The rodent and primate subtrees were first aligned separately (the rodent subtree originally included additional mouse strains). The two subtrees were then “stitched” together into a single alignment by aligning together their roots along with several Laurasiatheria genomes. This was done to save alignment time by reusing existing alignments.
 
 \subsection*{CAT}
-CAT was ran on the UCSC Genome Browser compute cluster for all annotation efforts in this publication. CAT commit f89a814 was used. For a detailed description of how CAT works, see both the supplementary text as well as the README.md on github:
-
-https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit. 
+CAT was ran on the UCSC Genome Browser compute cluster for all annotation efforts in this publication. CAT commit f89a814 was used. For a detailed description of how CAT works, see both the supplementary text as well as the README.md on github (\url{https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit}). 
 
 \subsection*{Pipeline runtime}
 CAT is relatively efficient, taking on the order of thousands of core hours to run. The largest considerations for runtime are running the various parameterizations of AUGUSTUS. AugustusCGP may run significantly faster on alignments with many genomes by reducing the chunk size from the default, but at the cost of lower quality predictions. AugustusTMR runtime scales linearly with the number of protein coding genes in the input annotation set, but scales non-linearly with the number of extrinsic hints provided, particularly if the hints are contradictory. 
 Running CAT on the PacBio primate genomes took a total of 7,030 core hours, with 3,437 of those dedicated to running AugustusTMR, 1,191 dedicated to running AugustusPB, and 2,190 dedicated to running AugustusCGP. Running CAT on the 14-way mammalian alignment took a total of 24,122 core hours, with 14,045 of those dedicated to running AugustusTMR, and 8,225 dedicated to running AugustusCGP.
 
 \section*{Acknowledgements}
-We would like to thank David Gordon for developing the indel error correction approach, Brian Raney, Hiram Clawson and the rest of the UCSC Browser team for help creating browser tracks, and Dent Earl, whose work led to this project. We also would like to thank Fergal Martin and Paul Flicek for revising the paper and providing a pre-release of the Ensembl V91 annotations on chimpanzee and gorilla.
+We would like to thank Brian Raney, Hiram Clawson and the rest of the UCSC Browser team for help creating browser tracks, and Dent Earl, whose work led to this project. We also would like to thank Fergal Martin and Paul Flicek for revising the paper and providing a pre-release of the Ensembl V91 annotations on chimpanzee and gorilla.
 
 \bibliography{references}
 \clearpage
@@ -236,10 +239,9 @@ A) Jaccard similarity of CDS introns and exons between rat annotation sets shows
 \beginsupplement
 
 \section*{Supplementary text}
-\subsection*{CAT pipeline detailed description}
-For the latest description of the pipeline, refer to the README on the CAT pipeline on github: 
+\section*{CAT pipeline detailed description}
 
-https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit
+Below is a walkthrough of the CAT pipeline. Please see the README on github ((\url{https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit}) for the most up to date information as well as practical information on how to run the pipeline 
 
 \subsection*{Whole genome alignment}
 	CAT relies on a reference-free whole genome alignment produced by the tool progressiveCactus. One or more of the genomes in the alignment should be a high quality reference whose existing annotations will be projected. Care should be taken when generating cactus alignments to provide sufficient outgroup genomes. Having high quality outgroups improves the resolution of paralogies and rearrangements.
@@ -419,3 +421,4 @@ Cat       & SRR3200450, SRR3200448, SRR3200449, SRR3200453                      
 Publicly available RNA-seq obtained via SRA for annotations performed in this paper. 
 \end{center}
 \end{document}
+
