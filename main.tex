@@ -209,7 +209,7 @@ The CAT pipeline takes as input a HAL alignment file, an existing annotation set
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth,height=0.8\textheight,keepaspectratio]{figure2-primate_v9.pdf}
+\includegraphics[width=0.8\textwidth,height=0.8\textheight,keepaspectratio]{figure2-primate_v10.pdf}
 \caption{Primate annotation}
 A) Validating CAT annotations using IsoSeq data. As a baseline comparison, IsoSeq data from human iPSC cells was compared to the GENCODE V27 annotation. IsoSeq data from chimpanzee,  gorilla and orangutan iPSC lines were compared to respective species specific annotations.  The IsoSeq data were clustered with ICE and collapsed using ToFu\cite{gordon2015widespread}. CAT annotation of PacBio great apes showed similar isoform concordance to human, and improvement over the older assemblies. B) Kallisto\cite{bray2015near} was used to quantify liver Illumina RNA-seq from each species on both the gene and transcript level on the existing and new great ape assemblies. Solid bars are transcripts or genes with TPM \textgreater 0.1, while shaded hatched bars are the remainder of the annotation sets. CAT annotation of great apes show nearly the same number of expressed genes and isoforms as the GENCODE reference on human with the exception of orangutan. 
 % I simplified the following; talk about exons vs. splices and paralogs in supplement/methods
@@ -228,8 +228,7 @@ D) Kallisto protein coding gene-level expression for chimpanzee iPSC RNA-seq is 
 \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v2.pdf}
 \caption{Pseudo-diploid human annotation}
 A) The number and fraction of genes comparatively annotated from GENCODE V27 in each assembly. GENCODE biotypes are simplified into protein coding, lncRNA, ncRNA, pseudogene and other. Other includes processed transcripts, nonsense-mediated decay, and immune-related genes. B) Comparative assembly metrics diagnose assembly quality. Frame shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly (left). Consistent with the great ape genomes, there is a systematic over-representation of coding deletions, despite these assemblies coming from haploid cell lines. Split gene analysis reports how often paralog-resolved transcript projections end up on different contigs, which can measure assembly gene-level contiguity. 
-% Cite assembly hubs below
-C) UCSC Browser showing TRIB3 deletion in CHM1. Analysis of genes found in one genome and not the other led to the discovery of a novel structural variant specific to CHM1, which disables the gene TRIB3. Spanning reads were found in both PacBio and Illumina whole genome sequencing that validate the deletion.
+C) UCSC Assembly Hub\cite{nguyen2014comparative} showing TRIB3 deletion in CHM1. Analysis of genes found in one genome and not the other led to the discovery of a novel structural variant specific to CHM1, which disables the gene TRIB3. Spanning reads were found in both PacBio and Illumina whole genome sequencing that validate the deletion.
 \label{fig:fig3}
 \end{figure}
 
