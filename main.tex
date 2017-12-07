@@ -76,6 +76,15 @@ In contrast to most earlier alignment methods \cite{blanchette2004aligning,earl2
 
 CAT provides a software toolkit designed to perform end-to-end annotation. The only required inputs are a hierarchical alignment format (HAL) \cite{hickey2013hal} multiple genome alignment as produced by Progressive Cactus and a GFF3 format annotation file for the previously annotated genome(s). CAT can take as optional input a set of aligned RNA-seq or Iso-Seq BAM format files, as well as protein FASTA files, which are used to construct hints for AUGUSTUS. Based on input parameters, CAT will run AUGUSTUS in up to four distinct parameterizations, two of which rely on transMap projections and two that perform \textit{ab initio} predictions using extrinsic information to guide prediction. The output of these modes of AUGUSTUS are evaluated alongside the original transMap projections using a combination of classifiers as well as the output from homGeneMapping \cite{stanke2004augustus}, which uses the Cactus alignments to project features such as annotations and RNA-seq support between the input genomes. A consensus-finding algorithm combines these gene sets (Figure \ref{fig:pipeline}). For a more detailed description of CAT see Supplementary Note 1.
 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{CAT.pdf}
+\caption{CAT pipeline schematic}
+The CAT pipeline takes as input a HAL alignment file, an existing annotation set and aligned RNA-seq reads. CAT uses the Cactus alignment to project annotations to other genomes using transMap \cite{stanke2008using}. These transcript projections are then filtered and classified. Optionally, AUGUSTUS can be run into up to three parameterizations. 1) AugustusTMR, treats each transcript projection separately and fixes errors in projection. 2) AugustusPB, uses long-read RNA-seq to look for novel isoforms. 3) AugustusCGP \cite{konig2015simultaneous} uses the Cactus alignment to simultaneously predict protein-coding genes in all aligned genomes. CGP and PB predictions are assigned to transMap projections where possible. All transcripts are classified for extrinsic support and structure and a ‘chooser’ algorithm picks the best representative for each input transcript, incorporating CGP and PB transcripts when they provide novel supported information. The final consensus gene set as well as associated feature tracks are used to create a assembly hub ready to be loaded by the UCSC Genome Browser.
+\label{fig:pipeline}
+\end{figure}
+
 \subsection*{Annotation of great apes}
 
 The previous generation of great ape assemblies (panTro4, ponAbe2 and gorGor4) as well as the new SMRT (PacBio) great ape assemblies \cite{gordon2016long} (Kronenberg et al., submitted) were annotated by CAT, using GRCh38 and GENCODE V27 as the reference. CAT identified an average of 141,477 more transcripts and 25,090 more genes in the SMRT assemblies compared to the Ensembl V91 annotation of the older great ape assemblies. Relative to the existing human annotation, the CAT annotations represent an average of 95.0\% of GENCODE gene models and 94.3\% of GENCODE isoforms in the SMRT great ape assemblies. Comparing the CAT annotations of SMRT and older assemblies, we see an average increase of 610 genes (1.9\%) and 3,743 isoforms (1.0\%) (Supplemental Figure \ref{supp_fig:primate_completeness}) in the SMRT assemblies; given this relatively small increase, most of the observed increase in genes and isoforms in the CAT annotations relative to the Ensembl annotations are therefore a result of the CAT annotation process rather than the updated assemblies.
@@ -83,6 +92,16 @@ The previous generation of great ape assemblies (panTro4, ponAbe2 and gorGor4) a
 Conversely to the overall increases in genes and isoforms, CAT identifies on average 3,553 fewer protein-coding genes than Ensembl. However, this brings the total number of coding genes more closely in line with the GENCODE annotation of human, as Ensembl has an average of 2,081 more protein-coding genes in great apes than GENCODE has for human (Supplemental Figure \ref{supp_fig:primate_completeness}). 
 
 To evaluate these annotations in a non-species-biased fashion, consensus isoform sequences created from Iso-Seq reads for each species were compared to their respective species annotations. As a baseline comparison, equivalent human data was compared to the high-quality human GENCODE V27 annotation. The CAT annotation of both the SMRT and older great ape assemblies (which used the raw Iso-Seq reads during the annotation process) and the Ensembl annotation of the older assemblies were compared. We calculated the rate of isoform concordance, that is the fraction of consensus Iso-Seq sequences that match either exactly or fuzzily an annotated isoform (Figure \ref{fig:primate}A; methods). Fuzzy matching allows for the intron boundaries to shift slightly in a isoform. For the SMRT chimpanzee (74.0\%/82.1\% exact/fuzzy matching) and orangutan (71.4\%/80.4\%) genome assemblies the isoform concordance rates were comparable to the rate for human (74.6\%/82.1\%). The gorilla GSMRT3.2 assembly showed lower concordance (67.6\%/76.9\%), likely due to the higher indel error rate in that assembly (Supplemental Figure \ref{supp_fig:primate_indels}). In contrast, the isoform concordance rate for the older assemblies was lower (on average 60.0\%/69.6\%), mostly reflecting exons in gaps and mis-joins, and was lower still for the existing Ensembl annotations (on average 47.9\%/57.6\%).
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth,height=0.8\textheight,keepaspectratio]{figure2-primate_v10.pdf}
+\caption{Primate annotation}
+A) Validating CAT annotations using Iso-Seq data. As a baseline comparison, Iso-Seq data from human iPSCs were compared to the GENCODE V27 annotation. Iso-Seq data from chimpanzee, gorilla and orangutan iPSC lines were compared to respective species-specific annotations. The Iso-Seq data were clustered with ICE and collapsed using ToFu\cite{gordon2015widespread}. CAT annotation of PacBio great apes showed similar isoform concordance to human, and improvement over the older assemblies. B) Kallisto\cite{bray2015near} was used to quantify liver Illumina RNA-seq from each species on both the gene and transcript level on the existing and new great ape assemblies. Solid bars are transcripts or genes with TPM \textgreater 0.1, while shaded hatched bars are the remainder of the annotation sets. CAT annotation of great apes shows nearly the same number of expressed genes and isoforms as the GENCODE reference on human with the exception of orangutan. C) The number of novel isoforms and paralogous genes with Iso-Seq support discovered by analysis of AugustusPB and AugustusCGP predictions for each species. D) Kallisto protein-coding gene-level expression for chimpanzee iPSC RNA-seq is compared to human across all of the chimpanzee annotation and assembly combinations as well as when mapped directly to human. In all cases the x-axis is the TPM of human iPSC data mapped to human. The highest correlation (Pearson r=0.96) is seen when comparing Clint annotated with CAT to GRCh38 annotated with GENCODE V27.
+\label{fig:primate}
+\end{figure}
+
 
 To assess the utility of CAT annotations for short-read analysis of RNA expression, species-specific induced pluripontent stem cell (iPSC) Illumina RNA-seq data were quantified (Figure \ref{fig:primate}B). Comparing the annotations of the older assemblies, CAT identified an average of 9,518 more genes and 54,107 more transcripts with measurable expression compared to Ensembl.
 
@@ -96,6 +115,17 @@ CAT provides new metrics for diagnosing assembly quality. In the process of anno
 \subsection*{Annotation of personal human diploid assemblies}
 
 High-quality \textit{de novo} assembly of a human genome is increasingly feasible; both Pacific Biosciences \cite{chin2016phased,huddleston2016discovery,korlach2017novo} and 10x Genomics \cite{Weisenfeld070425} provide tools to construct phased, diploid assemblies. Annotating diploid assemblies provides a window into haplotype-specific structural variation that may affect gene expression. To evaluate the ability of CAT to provide this analysis, a Progressive Cactus alignment was generated between hg38 and the two haploid cell line assemblies, CHM1 (GCA\_001297185.1) and CHM13 (GCA\_000983455.2), and CAT was used to annotate the resulting pseudo-diploid CHM1/CHM13 genome in the alignment. 99.3\% of genes present in GENCODE V27 were identified in CHM1, and 99.2\% in CHM13 (Figure \ref{fig:diploid_human}A). 
+  
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v2.pdf}
+\caption{Pseudo-diploid human annotation}
+A) The number and fraction of genes comparatively annotated from GENCODE V27 in each assembly. GENCODE biotypes are simplified into protein coding, lncRNA, ncRNA, pseudogene and other. Other includes processed transcripts, nonsense-mediated decay, and immune-related genes. B) Comparative assembly metrics diagnose assembly quality. Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly (left). Consistent with the great ape genomes, there is a systematic overrepresentation of coding deletions, despite these assemblies coming from haploid cell lines. Split gene analysis reports how often paralog-resolved transcript projections end up on different contigs, which can measure assembly gene-level contiguity. 
+C) UCSC Assembly Hub\cite{nguyen2014comparative} showing \textit{TRIB3} deletion in CHM1. Analysis of genes found in one genome and not the other led to the discovery of a novel structural variant specific to CHM1, which disables the gene \textit{TRIB3}. Spanning reads were found in both PacBio and Illumina whole-genome sequencing that validate the deletion.
+\label{fig:diploid_human}
+\end{figure}
+
   
 After filtering, 733 genes in CHM1 and 585 genes in CHM13 were identified with frame-shifting indels. Compared to ExAC, which found between 75 and 125 putative truncating events per individual \cite{karczewski2016exac}, this result suggests indel errors in the assemblies are producing false positives. Both assemblies exhibit a systematic overrepresentation of deletions despite coming from haploid cell lines (Figure \ref{fig:diploid_human}B, left). Split gene analysis found the CHM1 assembly to be slightly more gene contiguous (Figure \ref{fig:diploid_human}B, right).
 
@@ -118,6 +148,24 @@ AugustusTMR, which uses transMap and RNA-seq, provides CAT with a way to improve
 \subsection*{Annotation of a diverse set of mammals}
 
 Finally, to test CAT's ability to annotate across a substantial and diverse range of genomes, 13 mammalian genomes were comparatively annotated using the mouse (mm10) GENCODE VM15 as the reference transcript set (Figure \ref{fig:13way}A). Species-specific RNA-seq was used for every genome (Supplemental Table \ref{supp_table:rnaseq_sra_table}). To assess the completeness of these annotation sets, 4,104 benchmarking universal single-copy orthologs (BUSCO) were used \cite{simao2015busco}, which by design should be nearly uniformly present in each of these genomes. On average, only 108 BUSCO genes (2.63\%) were not annotated by CAT in each genome (Supplementary Table \ref{supp_table:busco}). 
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figure5-rat_v18.pdf}
+\caption{Validation of CAT annotation using rat}
+A) Jaccard similarity of CDS introns and exons between rat annotation sets shows high similarity between CAT and existing Ensembl and RefSeq annotations. B) Each transcript set was used to construct a Kallisto \cite{bray2015near} index, and then all of the input RNA-seq for annotation were quantified. Solid bars are genes or transcripts with non-zero expression (TPM\textgreater 0.1) estimates, while light hatched bars are the remainder of the annotation set. CAT provides an annotation set with slightly more detectable genes than other annotation methods, and far more detectable isoforms. C) AugustusTMR provides a mechanism to clean up transcript projections and shift splice sites, fixing alignment errors as well as real evolutionary changes. Most of the 10,335 AugustusTMR transcripts chosen in consensus finding show an improvement in RNA-seq support, which is one of the features used in consensus finding.
+\label{fig:rat_validation}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{13way-v4.pdf}
+\caption{13-way annotation}
+A) The phylogenetic guide tree for the 14-way mammal alignment. See the methods section for the exact Newick format tree. B) The gene annotation sets for each of the 13 mammalian genomes were quantified against the mixed input RNA-seq sets obtained from SRA. Genes or transcripts with TPM\textgreater 0.1 are solid colors, while genes or transcripts with no measurable expression are shaded. An average of 2.8 isoforms per gene per genome had quantifiable expression, suggesting that CAT can infer isoform information across long branch lengths. C) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. Even at large phylogenetic distances, CAT still correctly annotates 67.1\% of isoforms identified by ICE. D) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison.
+\label{fig:13way}
+\end{figure}
+
 
 To estimate the usefulness of these annotation sets, the input RNA-seq datasets were used to quantify expression of the annotation sets (Figure \ref{fig:13way}B). The main factor in measurable expression is the variety of the input RNA-seq datasets, as exemplified by the ability to measure expression of 88.9\% of genes annotated in the sheep genome. 
 
@@ -223,48 +271,6 @@ Running CAT on the PacBio primate genomes took a total of 7,030 core hours, with
 We would like to thank Brian Raney, Hiram Clawson and the rest of the UCSC Genome Browser team for help creating browser tracks. We would also like to thank James Kent for allowing UCSC Genome Browser compute resources to be used for this project. Finally, we would like to thank Fergal Martin and Paul Flicek for revising the paper and providing a pre-release of the Ensembl V91 annotations on chimpanzee and gorilla, as well as the whole GENCODE consortium for their support and advice. This work was supported, in part, by US National Institutes of Health (NIH) grants U24HG009081 and U41HG007635 to E.E.E., HG007990 to D.H and B.P, and HG007234 to B.P. E.E.E. and D.H. are investigators of the Howard Hughes Medical Institute. (COI: E.E.E. is on the scientific advisory board (SAB) of DNAnexus, Inc.)
 
 \bibliography{references}
-\clearpage
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{CAT.pdf}
-\caption{CAT pipeline schematic}
-The CAT pipeline takes as input a HAL alignment file, an existing annotation set and aligned RNA-seq reads. CAT uses the Cactus alignment to project annotations to other genomes using transMap \cite{stanke2008using}. These transcript projections are then filtered and classified. Optionally, AUGUSTUS can be run into up to three parameterizations. 1) AugustusTMR, treats each transcript projection separately and fixes errors in projection. 2) AugustusPB, uses long-read RNA-seq to look for novel isoforms. 3) AugustusCGP \cite{konig2015simultaneous} uses the Cactus alignment to simultaneously predict protein-coding genes in all aligned genomes. CGP and PB predictions are assigned to transMap projections where possible. All transcripts are classified for extrinsic support and structure and a ‘chooser’ algorithm picks the best representative for each input transcript, incorporating CGP and PB transcripts when they provide novel supported information. The final consensus gene set as well as associated feature tracks are used to create a assembly hub ready to be loaded by the UCSC Genome Browser.
-\label{fig:pipeline}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.8\textwidth,height=0.8\textheight,keepaspectratio]{figure2-primate_v10.pdf}
-\caption{Primate annotation}
-A) Validating CAT annotations using Iso-Seq data. As a baseline comparison, Iso-Seq data from human iPSCs were compared to the GENCODE V27 annotation. Iso-Seq data from chimpanzee, gorilla and orangutan iPSC lines were compared to respective species-specific annotations. The Iso-Seq data were clustered with ICE and collapsed using ToFu\cite{gordon2015widespread}. CAT annotation of PacBio great apes showed similar isoform concordance to human, and improvement over the older assemblies. B) Kallisto\cite{bray2015near} was used to quantify liver Illumina RNA-seq from each species on both the gene and transcript level on the existing and new great ape assemblies. Solid bars are transcripts or genes with TPM \textgreater 0.1, while shaded hatched bars are the remainder of the annotation sets. CAT annotation of great apes shows nearly the same number of expressed genes and isoforms as the GENCODE reference on human with the exception of orangutan. C) The number of novel isoforms and paralogous genes with Iso-Seq support discovered by analysis of AugustusPB and AugustusCGP predictions for each species. D) Kallisto protein-coding gene-level expression for chimpanzee iPSC RNA-seq is compared to human across all of the chimpanzee annotation and assembly combinations as well as when mapped directly to human. In all cases the x-axis is the TPM of human iPSC data mapped to human. The highest correlation (Pearson r=0.96) is seen when comparing Clint annotated with CAT to GRCh38 annotated with GENCODE V27.
-\label{fig:primate}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v2.pdf}
-\caption{Pseudo-diploid human annotation}
-A) The number and fraction of genes comparatively annotated from GENCODE V27 in each assembly. GENCODE biotypes are simplified into protein coding, lncRNA, ncRNA, pseudogene and other. Other includes processed transcripts, nonsense-mediated decay, and immune-related genes. B) Comparative assembly metrics diagnose assembly quality. Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly (left). Consistent with the great ape genomes, there is a systematic overrepresentation of coding deletions, despite these assemblies coming from haploid cell lines. Split gene analysis reports how often paralog-resolved transcript projections end up on different contigs, which can measure assembly gene-level contiguity. 
-C) UCSC Assembly Hub\cite{nguyen2014comparative} showing \textit{TRIB3} deletion in CHM1. Analysis of genes found in one genome and not the other led to the discovery of a novel structural variant specific to CHM1, which disables the gene \textit{TRIB3}. Spanning reads were found in both PacBio and Illumina whole-genome sequencing that validate the deletion.
-\label{fig:diploid_human}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figure5-rat_v18.pdf}
-\caption{Validation of CAT annotation using rat}
-A) Jaccard similarity of CDS introns and exons between rat annotation sets shows high similarity between CAT and existing Ensembl and RefSeq annotations. B) Each transcript set was used to construct a Kallisto \cite{bray2015near} index, and then all of the input RNA-seq for annotation were quantified. Solid bars are genes or transcripts with non-zero expression (TPM\textgreater 0.1) estimates, while light hatched bars are the remainder of the annotation set. CAT provides an annotation set with slightly more detectable genes than other annotation methods, and far more detectable isoforms. C) AugustusTMR provides a mechanism to clean up transcript projections and shift splice sites, fixing alignment errors as well as real evolutionary changes. Most of the 10,335 AugustusTMR transcripts chosen in consensus finding show an improvement in RNA-seq support, which is one of the features used in consensus finding.
-\label{fig:rat_validation}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{13way-v4.pdf}
-\caption{13-way annotation}
-A) The phylogenetic guide tree for the 14-way mammal alignment. See the methods section for the exact Newick format tree. B) The gene annotation sets for each of the 13 mammalian genomes were quantified against the mixed input RNA-seq sets obtained from SRA. Genes or transcripts with TPM\textgreater 0.1 are solid colors, while genes or transcripts with no measurable expression are shaded. An average of 2.8 isoforms per gene per genome had quantifiable expression, suggesting that CAT can infer isoform information across long branch lengths. C) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. Even at large phylogenetic distances, CAT still correctly annotates 67.1\% of isoforms identified by ICE. D) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison.
-\label{fig:13way}
-\end{figure}
 
 \clearpage
 \beginsupplement
