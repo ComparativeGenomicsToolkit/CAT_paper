@@ -164,29 +164,35 @@ A) Jaccard similarity of CDS introns and exons between rat annotation sets shows
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{13way-v4.pdf}
+\includegraphics[width=0.7\textwidth,height=0.7\textheight,keepaspectratio]{13way-v5.pdf}
 \caption{13-way annotation}
-A) The phylogenetic guide tree for the 14-way mammal alignment. See the methods section for the exact Newick format tree. B) The gene annotation sets for each of the 13 mammalian genomes were quantified against the mixed input RNA-seq sets obtained from SRA. Genes or transcripts with TPM\textgreater 0.1 are solid colors, while genes or transcripts with no measurable expression are shaded. An average of 2.8 isoforms per gene per genome had quantifiable expression, suggesting that CAT can infer isoform information across long branch lengths. C) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. Even at large phylogenetic distances, CAT still correctly annotates 67.1\% of isoforms identified by ICE. D) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison.
+A) The phylogenetic guide tree for the 14-way mammal alignment. See the methods section for the exact Newick format tree. B) The gene annotation sets for each of the 13 mammalian genomes were quantified against the mixed input RNA-seq sets obtained from SRA. Genes or transcripts with TPM\textgreater 0.1 are solid colors, while genes or transcripts with no measurable expression are shaded. An average of 2.8 isoforms per gene per genome had quantifiable expression, suggesting that CAT can infer isoform information across long branch lengths.
 \label{fig:13way}
 \end{figure}
 
 \begin{table}
 \centering
-\begin{tabular}{|c|c|c|}
-\multicolumn{3}{|c|}{Jaccard similarity of CAT annotations of hg19 vs. GENCODE} \\ \hline
-CAT/GENCODEV27lift37 & 0.617 & 0.836 \\
-\multicolumn{3}{|c|}{IsoSeq isoform validation of human annotations} \\ \hline
+\begin{tabular}{|c|c|c|} \hline
+\multicolumn{3}{|l|}{A) Jaccard similarity of CAT annotations of hg19 vs. GENCODE} \\ \hline
+Annotation pair & Exon Jaccard similarity & Intron Jaccard similarity \\ \hline
+CAT/GENCODEV27lift37 & 0.617 & 0.836 \\ \hline
+\multicolumn{3}{|l|}{B) ICE isoform validation of human annotations} \\ \hline
+Annotation & Exactly matches annotation & Fuzzy matches annotation \\ \hline
 GENCODEv27lift37 & 14,457 (75.2\%) & 15,920 (82.8\%) \\
-CAT & 11,004 (57.2\%) & 12,911 (67.1\%) \\
-\multicolumn{3}{|c|}{Isoform validation }
+CAT & 11,004 (57.2\%) & 12,911 (67.1\%) \\ \hline
+\multicolumn{3}{|l|}{C) Isoform validation of human protein-coding annotations compared to GENCODEv27lift37} \\ \hline
+Annotation & Exactly matches annotation & Fuzzy matches annotation \\ \hline
+CAT & 39,224 (75.2\%) & 43,099 (82.6\%) \\ \hline
 \end{tabular}
+\caption{Validation of CAT using mouse-human cross annotation}
+A) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison. B) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. C) The same exact/fuzzy matching scheme was applied directly to the CAT annotation of hg19 vs. the GENCODEv27lift37 annotation of hg19. These comparisons were restricted to coding splices. Even at large phylogenetic distances, CAT still finds 67.1\% of ICE isoforms and 82.6\% of GENCODE isoforms.
 \label{table:validation}
 \end{table}
 
 
 To estimate the usefulness of these annotation sets, the input RNA-seq datasets were used to quantify expression of the annotation sets (Figure \ref{fig:13way}B). The main factor in measurable expression is the variety of the input RNA-seq datasets, as exemplified by the ability to measure expression of 88.9\% of genes annotated in the sheep genome. 
 
-To assess the CAT translation of annotations over large phylogenetic distances, the annotation of human hg19 (GRCh37) produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set for that assembly (GENCODE V27lift37). Of the 19,233 isoform level clustering (ICE) isoforms detected when running ToFu \cite{gordon2015widespread} against hg19, 12,911 (67.15\%) fuzzy matched a CAT isoform compared to 15,920 (82.8\%) of the human GENCODE annotations (Figure \ref{fig:13way}C). The Jaccard similarity of the human CAT annotation to the human GENCODE annotation set was similar to rat comparison (Figure \ref{fig:13way}D).
+To assess the CAT translation of annotations over large phylogenetic distances, as well as provide a baseline validation of CAT performance, the annotation of human hg19 (GRCh37) produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set for that assembly (GENCODE V27lift37). Of the 19,233 isoform level clustering (ICE) isoforms detected when running ToFu \cite{gordon2015widespread} against hg19, 12,911 (67.15\%) fuzzy matched a CAT isoform compared to 15,920 (82.8\%) of the human GENCODE annotations (Table \ref{table:validation}. Additionally, 82.6\% of CAT coding isoforms matched the coding introns of GENCODEv27lift37 isoforms. The Jaccard similarity of the human CAT annotation to the human GENCODE annotation set was similar to rat comparison.
 
 \section*{Discussion}
 
