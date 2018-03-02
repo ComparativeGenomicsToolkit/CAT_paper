@@ -83,9 +83,9 @@ The consensus finding algorithm combines all sources of transcript evidence into
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{CAT.pdf}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{pipeline_simplified.pdf}
 \caption{CAT pipeline schematic}
-The CAT pipeline takes as input a HAL alignment file, an existing annotation set and aligned RNA-seq reads. CAT uses the Cactus alignment to project annotations to other genomes using transMap \cite{stanke2008using}. These transcript projections are then filtered and classified. Optionally, AUGUSTUS can be run into up to three parameterizations. 1) AugustusTMR, treats each transcript projection separately and fixes errors in projection. 2) AugustusPB, uses long-read RNA-seq to look for novel isoforms. 3) AugustusCGP \cite{konig2015simultaneous} uses the Cactus alignment to simultaneously predict protein-coding genes in all aligned genomes. CGP and PB predictions are assigned to transMap projections where possible. All transcripts are classified for extrinsic support and structure and a ‘chooser’ algorithm picks the best representative for each input transcript, incorporating CGP and PB transcripts when they provide novel supported information. The final consensus gene set as well as associated feature tracks are used to create a assembly hub ready to be loaded by the UCSC Genome Browser.
+The CAT pipeline takes as input a HAL alignment file, an existing annotation set and aligned RNA-seq reads. CAT uses the Cactus alignment to project annotations to other genomes using transMap \cite{stanke2008using}. These transcript projections are then filtered and paralog resolved. Optionally, AUGUSTUS can be run into up to four parameterizations. All transcripts are classified for extrinsic support and structure and a ‘chooser’ algorithm picks the best representative for each input transcript, incorporating \textit{ab-initio} transcripts when they provide novel supported information. The final consensus gene set as well as associated feature tracks are used to create a assembly hub ready to be loaded by the UCSC Genome Browser. See Supplementary Figure \ref{supp_fig:pipeline} for more detail.
 \label{fig:pipeline}
 \end{figure}
 
@@ -339,6 +339,16 @@ CGP/PB transcripts are then assigned a possible source transcript by comparing t
 Another consideration is the quality of the input extrinsic data. Low quality RNA-seq data, or RNA-seq libraries not polyA selected, lead to a higher false positive rate in CGP. These often manifest as small single exon transcripts that can inflate the rate of putative novel gene calls. Adjusting a cutoff for the number of exons required to be considered novel can help drill down to a set of interesting candidates.
 
 \clearpage
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{CAT_detailed.pdf}
+\caption{CAT detailed pipeline schematic}
+
+\label{supp_fig:pipeline}
+\end{figure}
+
+A more detailed schematic of the CAT pipeline. The CAT pipeline takes as input a HAL alignment file, an existing annotation set and aligned RNA-seq reads. CAT uses the Cactus alignment to project annotations to other genomes using transMap \cite{stanke2008using}. These transcript projections are then filtered and paralog resolved. Optionally, AUGUSTUS can be run into up to four parameterizations. 1) AugustusTMR, treats each transcript projection separately and fixes errors in projection. 2) AugustusPB, uses long-read RNA-seq to look for novel isoforms. 3) AugustusCGP \cite{konig2015simultaneous} uses the Cactus alignment to simultaneously predict protein-coding genes in all aligned genomes. CGP and PB predictions are assigned to transMap projections where possible based on overlap. All transcripts are classified for extrinsic support and structure and a ‘chooser’ algorithm picks the best representative for each input transcript, incorporating CGP and PB transcripts when they provide novel supported information. The final consensus gene set as well as associated feature tracks are used to create a assembly hub ready to be loaded by the UCSC Genome Browser. The table below the schematic gives a brief overview of each module and the outputs it produces.
 
 \begin{figure}
 \centering
