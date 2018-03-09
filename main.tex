@@ -91,7 +91,7 @@ The CAT pipeline takes as input a HAL alignment file, an existing annotation set
 
 \subsection*{Annotation of great apes}
 
-The previous generation of great ape assemblies (panTro4, ponAbe2 and gorGor4) as well as the new SMRT (PacBio) great ape assemblies \cite{gordon2016long} (Kronenberg et al., submitted) were annotated by CAT, using GRCh38 and GENCODE V27 as the reference. CAT identified an average of 141,477 more transcripts and 25,090 more genes in the SMRT assemblies compared to the Ensembl V91 annotation of the older great ape assemblies. Relative to the existing human annotation, the CAT annotations represent an average of 95.0\% of GENCODE gene models and 94.3\% of GENCODE isoforms in the SMRT great ape assemblies. Comparing the CAT annotations of SMRT and older assemblies, we see an average increase of 610 genes (1.9\%) and 3,743 isoforms (1.0\%) (Supplemental Figure \ref{supp_fig:primate_completeness}) in the SMRT assemblies; given this relatively small increase, most of the observed increase in genes and isoforms in the CAT annotations relative to the Ensembl annotations are therefore a result of the CAT annotation process rather than the updated assemblies.
+The previous generation of great ape assemblies (panTro4, ponAbe2 and gorGor4) as well as the new SMRT (PacBio) great ape assemblies \cite{gordon2016long} (Kronenberg et al., submitted) were annotated by CAT, using GRCh38 and GENCODE V27 as the reference. On average, CAT identified 141,477 more transcripts and 25,090 more genes in the new SMRT assemblies of the great apes compared to the Ensembl V91 annotation of the previous generation of great ape assemblies. Relative to the existing human annotation, the CAT annotations represent an average of 95.0\% of GENCODE gene models and 94.3\% of GENCODE isoforms in the SMRT great ape assemblies. This increase in isoform representation is mostly due to the large number of isoforms annotated by GENCODE and reproduced in these genomes, while the increase in gene content is due to the mapping over of non-coding genes poorly represented in the Ensembl annotation. Comparing the CAT annotations of SMRT great apes and older assemblies, we see an average increase of 610 genes (1.9\%) and 3,743 isoforms (1.0\%) (Supplemental Figure \ref{supp_fig:primate_completeness}) in the SMRT assemblies; given this relatively small increase, most of the observed increase in genes and isoforms in the CAT annotations relative to the Ensembl annotations are therefore a result of the CAT annotation process rather than the updated assemblies.
 
 Conversely to the overall increases in genes and isoforms, CAT identifies on average 3,553 fewer protein-coding genes than Ensembl. However, this brings the total number of coding genes more closely in line with the GENCODE annotation of human, as Ensembl has an average of 2,081 more protein-coding genes in great apes than GENCODE has for human (Supplemental Figure \ref{supp_fig:primate_completeness}). 
 
@@ -118,9 +118,8 @@ CAT provides new metrics for diagnosing assembly quality. In the process of anno
 
 \subsection*{Annotation of personal human diploid assemblies}
 
-High-quality \textit{de novo} assembly of a human genome is increasingly feasible; both Pacific Biosciences \cite{chin2016phased,huddleston2016discovery,korlach2017novo} and 10x Genomics \cite{Weisenfeld070425} provide tools to construct phased, diploid assemblies. Annotating diploid assemblies provides a window into haplotype-specific structural variation that may affect gene expression. To evaluate the ability of CAT to provide this analysis, a Progressive Cactus alignment was generated between hg38 and the two haploid cell line assemblies, CHM1 (GCA\_001297185.1) and CHM13 (GCA\_000983455.2), and CAT was used to annotate the resulting pseudo-diploid CHM1/CHM13 genome in the alignment. 99.3\% of genes present in GENCODE V27 were identified in CHM1, and 99.2\% in CHM13 (Figure \ref{fig:diploid_human}A). 
+High-quality \textit{de novo} assembly of a human genome is increasingly feasible; both Pacific Biosciences \cite{chin2016phased,huddleston2016discovery,korlach2017novo} and 10x Genomics \cite{Weisenfeld070425} provide tools to construct phased, diploid assemblies. Annotating diploid assemblies provides a window into haplotype-specific structural variation that may affect gene expression. To evaluate the ability of CAT to provide this analysis, a Progressive Cactus alignment was generated between hg38 and the two haploid cell line assemblies, CHM1 (GCA\_001297185.1) and CHM13 (GCA\_000983455.2), and CAT was used to annotate the resulting pseudo-diploid CHM1/CHM13 genome in the alignment. Additionally, an alignment was generated between hg38 and the 10x Genomics diploid assembly of four individuals (NA12878, NA24385, HG00512 and NA19240). 
   
-
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v2.pdf}
@@ -130,10 +129,22 @@ C) UCSC Assembly Hub\cite{nguyen2014comparative} showing \textit{TRIB3} deletion
 \label{fig:diploid_human}
 \end{figure}
 
-  
-After filtering, 733 genes in CHM1 and 585 genes in CHM13 were identified with frame-shifting indels. Compared to ExAC, which found between 75 and 125 putative truncating events per individual \cite{karczewski2016exac}, this result suggests indel errors in the assemblies are producing false positives. Both assemblies exhibit a systematic overrepresentation of deletions despite coming from haploid cell lines (Figure \ref{fig:diploid_human}B, left). Split gene analysis found the CHM1 assembly to be slightly more gene contiguous (Figure \ref{fig:diploid_human}B, right).
+\subsubsection*{Annotation of synthetic diploid PacBio assemblies}
+
+99.3\% of genes present in GENCODE V27 were identified in CHM1, and 99.2\% in CHM13 (Figure \ref{fig:diploid_human}A). After filtering, 733 genes in CHM1 and 585 genes in CHM13 were identified with frame-shifting indels. Compared to ExAC, which found between 75 and 125 putative truncating events per individual \cite{karczewski2016exac}, this result suggests indel errors in the assemblies are producing false positives. Both assemblies exhibit a systematic overrepresentation of deletions despite coming from haploid cell lines (Figure \ref{fig:diploid_human}B, left). Split gene analysis found the CHM1 assembly to be slightly more gene contiguous (Figure \ref{fig:diploid_human}B, right).
 
 Manual analysis of the 27 genes missing in CHM13 relative to CHM1 and the 6 genes missing in CHM13 relative to CHM1 led to the discovery of the example region in Figure \ref{fig:diploid_human}C. This deletion removes most of the exons of \textit{TRIB3}, a pseudokinase associated with type 2 diabetes \cite{shi2009association} (Supplemental Figure \ref{supp_fig:trib3}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{10x-figure.pdf}
+\caption{10x Genomics Supernova diploid human annotation}
+The pseudohap2 output from the Supernova Assembler V2.0 was used for these analyses. Pseudohap2 produces a complete linear assembly for each haplotype. A) The number of genes and transcripts comparatively annotated from GENCODE V27 in each haplotype assembly. B) Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly. Supernova assemblies exhibit an excess of coding deletions. C) An example insertion near an exon of TAOK3 seen in one haplotype of NA12878.
+\label{fig:10x}
+\end{figure}
+
+\subsubsection*{Annotation of 10x Genomics Supernova assemblies}
+An average of 90.5\% of genes and 91.3\% of transcripts from GENCODE V27 were identified in the 8 haplotype assemblies (Figure \ref{fig:10x}A). Coding indel analysis found an over-abundance of coding deletions relative to insertions (Figure \ref{fig:10x}B). Analysis of 10x Longranger structural variant calls found a heterozygous insertion near an exon of the gene TAOK3 that can be seen clearly in the alignment of the Supernova assemblies (Figure \ref{fig:10x}C).
 
 \subsection*{Reannotating the rat genome}
 
@@ -172,20 +183,27 @@ A) The phylogenetic guide tree for the 14-way mammal alignment. See the methods 
 
 \begin{table}
 \centering
+A) Jaccard similarity of CAT annotations of hg19 vs. GENCODE \\
+\begin{tabular}{|c|c|} \hline
+Exon Jaccard similarity & Intron Jaccard similarity \\ \hline
+0.617 & 0.836 \\ \hline
+\end{tabular} \\
+\vspace{5mm}
+B) ICE isoform validation of human annotations \\
 \begin{tabular}{|c|c|c|} \hline
-\multicolumn{3}{|l|}{A) Jaccard similarity of CAT annotations of hg19 vs. GENCODE} \\ \hline
-Annotation pair & Exon Jaccard similarity & Intron Jaccard similarity \\ \hline
-CAT/GENCODEV27lift37 & 0.617 & 0.836 \\ \hline
-\multicolumn{3}{|l|}{B) ICE isoform validation of human annotations} \\ \hline
 Annotation & Exactly matches annotation & Fuzzy matches annotation \\ \hline
 GENCODEv27lift37 & 14,457 (75.2\%) & 15,920 (82.8\%) \\
 CAT & 11,004 (57.2\%) & 12,911 (67.1\%) \\ \hline
-\multicolumn{3}{|l|}{C) Isoform validation of human protein-coding annotations compared to GENCODEv27lift37} \\ \hline
-Annotation & Exactly matches annotation & Fuzzy matches annotation \\ \hline
-CAT & 39,224 (75.2\%) & 43,099 (82.6\%) \\ \hline
+\end{tabular} \\
+\vspace{5mm}
+C) Isoform validation of CAT protein-coding annotations compared to hg19 \\
+\begin{tabular}{|c|c|} \hline
+Exactly matches annotation & Fuzzy matches annotation \\ \hline
+39,224 (75.2\%) & 43,099 (82.6\%) \\ \hline
 \end{tabular}
+
 \caption{Validation of CAT using mouse-human cross annotation}
-A) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison. B) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. C) The same exact/fuzzy matching scheme was applied directly to the CAT annotation of hg19 vs. the GENCODEv27lift37 annotation of hg19. These comparisons were restricted to coding splices. Even at large phylogenetic distances, CAT still finds 67.1\% of ICE isoforms and 82.6\% of GENCODE isoforms.
+A) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison. B) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. C) The same exact/fuzzy matching scheme was applied directly to the CAT annotation of hg19 vs. GENCODE. These comparisons were restricted to coding splices. Even at large phylogenetic distances, CAT still finds 67.1\% of ICE isoforms and 82.6\% of GENCODE isoforms.
 \label{table:validation}
 \end{table}
 
@@ -266,10 +284,18 @@ For the primate alignments, the guide tree was
 (((((((Susie_Gorilla:0.008964,(Human:0.00655,Clint_Chimp:0.00684)human_chimp:0.00122)gorilla_chimp_human:0.009693,Susie_Orangutan:0.01894)great_ape:0.003471,Gibbon:0.02227)great_ape_gibbon:0.01204,Rhesus:0.004991)old_world_monkey:0.02183,Squirrel_monkey:0.01035)monkey:0.05209,Bushbaby:0.1194)primate_anc:0.013494,Mouse:0.084509);
 \end{lstlisting}
   
-An identical tree (with different assembly names) was used for the alignment of current reference great apes. For the pseudo-diploid human alignment, the guide tree was 
+An identical tree (with different assembly names) was used for the alignment of current reference great apes.
   
+For the diploid human alignments, the two haploid cell lines (PacBio) or all human haplotypes (10x) were placed under the same node with a very short branch length, with chimpanzee as outgroup. The guide trees were
+
 \begin{lstlisting}
 ((hg38:0.001,chm1:0.001,chm13:0.001)human:0.01,chimp:0.01);
+\end{lstlisting}
+
+and
+
+\begin{lstlisting}
+((hg38:0.001,HG00512-H1:.001,HG00512-H2:.001,NA12878-H1:.001,NA12878-H2:.001,NA19240-H1:.001,NA19240-H2:.001,NA24385-H1:.001,NA24385-H2:.001)human:0.01,chimp:0.01);
 \end{lstlisting}
   
 representing a star phylogeny of the three human assemblies. For the 14-way mammal alignment, the Progressive Cactus commit used was e3c6055 and the guide tree was 
@@ -286,11 +312,11 @@ CAT was run on the UCSC Genome Browser compute cluster for all annotation effort
 
 \subsection*{Pipeline runtime}
 
-CAT is relatively efficient, taking on the order of thousands of core hours to run. The largest considerations for runtime are running the various parameterizations of AUGUSTUS. AugustusCGP may run significantly faster on alignments with many genomes by reducing the chunk size from the default, but at the cost of lower quality predictions. AugustusTMR runtime scales linearly with the number of protein-coding transcripts in the input annotation set, but scales non-linearly with the number of extrinsic hints provided, particularly if the hints are contradictory. 
+CAT is relatively efficient, taking on the order of thousands of core hours to run. The largest considerations for runtime are running the various parameterizations of AUGUSTUS as well as generating the required cactus alignment. AugustusCGP may run significantly faster on alignments with many genomes by reducing the chunk size from the default, but at the cost of lower quality predictions. AugustusTMR runtime scales linearly with the number of protein-coding transcripts in the input annotation set, but scales non-linearly with the number of extrinsic hints provided, particularly if the hints are contradictory. 
 
 All of the analyses in this paper were run on the UCSC cluster, which uses the cluster management tool Parasol and has 1024 cores with 8GB of RAM per core. CAT was optimized for this, and shouldn't need more memory per core in any case except the AugustusCGP step when the number of aligned genomes exceeds \~10. This can be adjusted by reducing the alignment chunk size that AugustusCGP is given to work with. For example, for the 14-way mammalian analysis, the flags \texttt{--maf-chunksize 1000000 --maf-overlap 200000} were set which kept memory usage under 8GB.
 
-ProgressiveCactus alignments take on the order of 120 CPU days (2,880 core hours) per internal node on the guide tree, assuming a binary tree. This number can fluctuate by a factor of 2-4 depending on how similar the two genomes being aligned at that node are. ProgressiveCactus alignments are a mix of high CPU low memory steps with a few high memory steps, with some jobs requiring \~240GB of RAM.
+Cactus alignments take on the order of 120 CPU days (2,880 core hours) per internal node on the guide tree, assuming a binary tree. This number can fluctuate by a factor of 2-4 depending on how similar the two genomes being aligned at that node are. Cactus alignments are a mix of high CPU low memory steps with a few high memory steps, with some jobs requiring \~240GB of RAM.
 
 Running CAT on the PacBio primate genomes took a total of 7,030 core hours, with 3,437 of those dedicated to running AugustusTMR, 1,191 dedicated to running AugustusPB, and 2,190 dedicated to running AugustusCGP. Running CAT on the 14-way mammalian alignment took a total of 24,122 core hours, with 14,045 of those dedicated to running AugustusTMR, and 8,225 dedicated to running AugustusCGP.
 
@@ -356,6 +382,17 @@ CGP/PB transcripts are then assigned a possible source transcript by comparing t
 	The consensus finding process provides many user-tunable flags that can be adjusted based on the phylogenetic distances being considered. Users can change how many exons and introns should be supported by the reference annotation and extrinsic sources before being considered. Users can also decide if they want only to consider extrinsic data within that individual species or within all species in the alignment. 
 
 Another consideration is the quality of the input extrinsic data. Low quality RNA-seq data, or RNA-seq libraries not polyA selected, lead to a higher false positive rate in CGP. These often manifest as small single exon transcripts that can inflate the rate of putative novel gene calls. Adjusting a cutoff for the number of exons required to be considered novel can help drill down to a set of interesting candidates.
+
+\subsubsection*{Effect of low-contiguity or incomplete assemblies on annotation quality}
+Annotating a clade with widely varying assembly quality could potentially impact the quality of the annotation: because CAT uses a multiple alignment to project transcripts, lower-quality assemblies could impact the alignment between high-quality assemblies. However, the aligner we use, Cactus, is careful to mitigate this problem. At each progressive step, it aligns the ingroups against multiple outgroups, preferring assemblies that are marked as high-quality by the user. Any sequence in an ingroup that aligns with an outgroup is guaranteed to be lifted up to be input to the next progressive step, which should ensure that incomplete assemblies, with a lot of missing data, do not drastically affect the alignment between high-quality assemblies. To quantify the effect of low-quality assemblies on Cactus alignments, we compared two alignments: one with human, mouse, and several lower-quality assemblies, including the first drafts of tarsier and tree shrew, which are fairly low-quality, with $<$30kb N50 and are relatively incomplete (high \%N). The guide tree for this alignment was:
+\begin{lstlisting}
+(((((((hg19:0.00877,gorGor3:0.008964):0.009693,ponAbe2:0.01894):0.015511,rheMac3:0.037601):0.07392,tarSyr1:0.1114):0.034014,tupChi1:0.19114):0.002,(dipOrd1:0.171759,(criGri1:0.14,mm10:0.132282):0.11015):0.114051)euarchontoglires:0.020593,(bosTau7:0.18908,canFam3:0.13303):0.032898);
+\end{lstlisting}
+where the leaf names refer to the UCSC Genome Browser identifiers for the assemblies. The second alignment was of only the high-quality assemblies human, mouse, rat, and dog, with guide tree:
+\begin{lstlisting}
+(((mm10:0.0728,rn5:0.0812)mr:0.2603,hg19:0.142):0.0233, canFam3:0.197);
+\end{lstlisting}
+The coverage of mouse on human in these two alignments was very similar: 31.5\% for the first vs. 31.8\% for the second. We believe this demonstrates that, empirically, the induced alignment between high-quality genomes is unlikely to be drastically affected by the inclusion of low-quality assemblies (though some minor changes are expected), and that the resulting annotations of high-quality assemblies are unlikely to be significantly affected by the presence of low-quality assemblies.
 
 \clearpage
 
