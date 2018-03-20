@@ -7,7 +7,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{indentfirst}
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
 \lstset{
 basicstyle=\small\ttfamily,
 columns=flexible,
@@ -122,29 +122,29 @@ High-quality \textit{de novo} assembly of a human genome is increasingly feasibl
   
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v2.pdf}
+\includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{figure3-human-v3.pdf}
 \caption{Pseudo-diploid human annotation}
-A) The number and fraction of genes comparatively annotated from GENCODE V27 in each assembly. GENCODE biotypes are simplified into protein coding, lncRNA, ncRNA, pseudogene and other. Other includes processed transcripts, nonsense-mediated decay, and immune-related genes. B) Comparative assembly metrics diagnose assembly quality. Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly (left). Consistent with the great ape genomes, there is a systematic overrepresentation of coding deletions, despite these assemblies coming from haploid cell lines. Split gene analysis reports how often paralog-resolved transcript projections end up on different contigs, which can measure assembly gene-level contiguity. 
+A) The number and fraction of genes comparatively annotated from GENCODE V27 in each assembly. GENCODE biotypes are simplified into protein coding, lncRNA, ncRNA, pseudogene and other. Other includes processed transcripts, nonsense-mediated decay, and immune-related genes. B) Comparative assembly metrics diagnose assembly quality. Split gene analysis (top) reports how often paralog-resolved transcript projections end up on different contigs, which can measure assembly gene-level contiguity.  Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly (bottom). Consistent with the great ape genomes, there is a systematic over-representation of coding deletions, despite these assemblies coming from haploid cell lines.
 C) UCSC Assembly Hub\cite{nguyen2014comparative} showing \textit{TRIB3} deletion in CHM1. Analysis of genes found in one genome and not the other led to the discovery of a novel structural variant specific to CHM1, which disables the gene \textit{TRIB3}. Spanning reads were found in both PacBio and Illumina whole-genome sequencing that validate the deletion.
 \label{fig:diploid_human}
 \end{figure}
 
 \subsubsection*{Annotation of synthetic diploid PacBio assemblies}
 
-99.3\% of genes present in GENCODE V27 were identified in CHM1, and 99.2\% in CHM13 (Figure \ref{fig:diploid_human}A). After filtering, 733 genes in CHM1 and 585 genes in CHM13 were identified with frame-shifting indels. Compared to ExAC, which found between 75 and 125 putative truncating events per individual \cite{karczewski2016exac}, this result suggests indel errors in the assemblies are producing false positives. Both assemblies exhibit a systematic overrepresentation of deletions despite coming from haploid cell lines (Figure \ref{fig:diploid_human}B, left). Split gene analysis found the CHM1 assembly to be slightly more gene contiguous (Figure \ref{fig:diploid_human}B, right).
+90.5\% of genes present in GENCODE V27 were identified in both CHM1 and CCHM13 (Figure \ref{fig:diploid_human}A). After filtering, 635 genes in CHM1 and 222 genes in CHM13 were identified with frame-shifting indels. Compared to ExAC, which found between 75 and 125 putative truncating events per individual \cite{karczewski2016exac}, this result suggests indel errors in the assemblies are producing false positives. Both assemblies exhibit a systematic overrepresentation of deletions despite coming from haploid cell lines (Figure \ref{fig:diploid_human}B, bottom). Interestingly, split gene analysis found the CHM1 assembly to be slightly more gene contiguous (Figure \ref{fig:diploid_human}B, top). These results suggest that the CHM1 assembly trades base-level accuracy for higher contiguity.
 
-Manual analysis of the 27 genes missing in CHM13 relative to CHM1 and the 6 genes missing in CHM13 relative to CHM1 led to the discovery of the example region in Figure \ref{fig:diploid_human}C. This deletion removes most of the exons of \textit{TRIB3}, a pseudokinase associated with type 2 diabetes \cite{shi2009association} (Supplemental Figure \ref{supp_fig:trib3}).
+Manual analysis of genes with different transMap coverage in CHM13 relative to CHM1 led to the discovery of the example region in Figure \ref{fig:diploid_human}C. This deletion removes most of the exons of \textit{TRIB3}, a pseudokinase associated with type 2 diabetes \cite{shi2009association} (Supplemental Figure \ref{supp_fig:trib3}).
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{10x-figure.pdf}
 \caption{10x Genomics Supernova diploid human annotation}
-The pseudohap2 output from the Supernova Assembler V2.0 was used for these analyses. Pseudohap2 produces a complete linear assembly for each haplotype. A) The number of genes and transcripts comparatively annotated from GENCODE V27 in each haplotype assembly. B) Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly. Supernova assemblies exhibit an excess of coding deletions. C) An example insertion near an exon of TAOK3 seen in one haplotype of NA12878.
+The pseudohap2 output from the Supernova Assembler V2.0 was used for these analyses. Pseudohap2 produces a complete linear assembly for each haplotype. A) The number of genes and transcripts comparatively annotated from GENCODE V27 in each haplotype assembly. B) Frame-shifting insertions, deletions and multiple of 3 indels that do not shift frame are reported for each assembly. Supernova assemblies exhibit an excess of coding deletions. C) An example insertion near an exon of \textit{TAOK3} seen in one haplotype of NA12878.
 \label{fig:10x}
 \end{figure}
 
 \subsubsection*{Annotation of 10x Genomics Supernova assemblies}
-An average of 90.5\% of genes and 91.3\% of transcripts from GENCODE V27 were identified in the 8 haplotype assemblies (Figure \ref{fig:10x}A). Coding indel analysis found an over-abundance of coding deletions relative to insertions (Figure \ref{fig:10x}B). Analysis of 10x Longranger structural variant calls found a heterozygous insertion near an exon of the gene TAOK3 that can be seen clearly in the alignment of the Supernova assemblies (Figure \ref{fig:10x}C).
+An average of 90.5\% of genes and 91.3\% of transcripts from GENCODE V27 were identified in the 8 haplotype assemblies (Figure \ref{fig:10x}A). Coding indel analysis found an over-abundance of coding deletions relative to insertions (Figure \ref{fig:10x}B). Analysis of 10x Longranger structural variant calls found a heterozygous insertion near an exon of the gene \textit{TAOK3} that can be seen in the alignment of the Supernova assemblies (Figure \ref{fig:10x}C).
 
 \subsection*{Reannotating the rat genome}
 
@@ -154,11 +154,11 @@ CAT was run on a Cactus alignment between mouse (mm10) and rat (rn6) using rabbi
   
 CAT comparatively annotated 78.1\% of genes and 91.9\% of protein-coding genes present in GENCODE VM11 on rn6 (Supplemental Figure \ref{supp_fig:rat_completeness}), representing an increase of 14,675 genes and 74,308 transcripts over Ensembl V90, 5,104 genes and 32,157 transcripts over RefSeq and 14,541 genes and 81,022 transcripts over Maker. 13,651 loci were identified with no overlap to any other annotation set (Supplemental Figure \ref{supp_fig:rat_locus_venn}).
 
-We compared CDS exon and CDS intron predictions between annotation sets (Supplemental Figure \ref{supp_fig:rat_exon_intron}). Ensembl, RefSeq and CAT CDS Exon annotations were all comparably similar (between 0.648 and 0.659 Jaccard similarity), while for CDS introns CAT and RefSeq displayed the highest Jaccard similarity (0.841). In all comparisons MAKER was the outlier (Figure \ref{fig:rat_validation}A) with the lowest similarity to the other sets.
+We compared CDS exon and CDS intron predictions between annotation sets (Table \ref{table:rat_similarity}A, Supplemental Figure \ref{supp_fig:rat_exon_intron}). We measured precision and recall of coding intron and exon intervals based on comparing the CAT annotation to EnsemblV90, where precision is the proportion of CAT exons/introns that exactly match Ensembl, and recall is the proportion of CAT exons/introns that exactly match Ensembl over the number of exons/introns CAT annotated. Ensembl, RefSeq and CAT CDS exon annotations were all comparably similar (between 0.648 and 0.659 Jaccard similarity), while for CDS introns CAT and RefSeq displayed the highest Jaccard similarity (0.841). In all comparisons MAKER was the outlier (Table \ref{table:rat_similarity}B) with the lowest similarity to the other sets.
   
-The input RNA-seq dataset was used for isoform quantification against the CAT, MAKER, Ensembl and RefSeq transcriptomes (Figure \ref{fig:rat_validation}B). CAT identified 1,881 protein-coding genes and 1,011 lncRNAs with measurable expression not present in either Ensembl or RefSeq. CAT also identified 27,712 expressed coding splice junctions not in the union of RefSeq and Ensembl, for a total of 21,267 novel expressed isoforms. 5,526 of the 13,651 loci unique to CAT had measurable expression. 
+The input RNA-seq dataset was used for isoform quantification against the CAT, MAKER, Ensembl and RefSeq transcriptomes (Figure \ref{fig:rat_validation}A). CAT identified 1,881 protein-coding genes and 1,011 lncRNAs with measurable expression not present in either Ensembl or RefSeq. CAT also identified 27,712 expressed coding splice junctions not in the union of RefSeq and Ensembl, for a total of 21,267 novel expressed isoforms. 5,526 of the 13,651 loci unique to CAT had measurable expression. 
 
-AugustusTMR, which uses transMap and RNA-seq, provides CAT with a way to improve transcript predictions projected between species. Comparing the 10,335 multi-exon protein-coding transcripts in which the AugustusTMR prediction differed from the input transMap projection, we see considerable overall improvement in resulting RNA-seq support of predicted splice boundaries in the AugustusTMR transcripts (Figure \ref{fig:rat_validation}C). 
+AugustusTMR, which uses transMap and RNA-seq, provides CAT with a way to improve transcript predictions projected between species. Comparing the 10,335 multi-exon protein-coding transcripts in which the AugustusTMR prediction differed from the input transMap projection, we see considerable overall improvement in resulting RNA-seq support of predicted splice boundaries in the AugustusTMR transcripts (Figure \ref{fig:rat_validation}B). 
 
 \subsection*{Annotation of a diverse set of mammals}
 
@@ -169,9 +169,34 @@ Finally, to test CAT's ability to annotate across a substantial and diverse rang
 \centering
 \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{figure5-rat_v18.pdf}
 \caption{Validation of CAT annotation using rat}
-A) Jaccard similarity of CDS introns and exons between rat annotation sets shows high similarity between CAT and existing Ensembl and RefSeq annotations. B) Each transcript set was used to construct a Kallisto \cite{bray2015near} index, and then all of the input RNA-seq for annotation were quantified. Solid bars are genes or transcripts with non-zero expression (TPM\textgreater 0.1) estimates, while light hatched bars are the remainder of the annotation set. CAT provides an annotation set with slightly more detectable genes than other annotation methods, and far more detectable isoforms. C) AugustusTMR provides a mechanism to clean up transcript projections and shift splice sites, fixing alignment errors as well as real evolutionary changes. Most of the 10,335 AugustusTMR transcripts chosen in consensus finding show an improvement in RNA-seq support, which is one of the features used in consensus finding.
+A) Each transcript set was used to construct a Kallisto \cite{bray2015near} index, and then all of the input RNA-seq for annotation were quantified. Solid bars are genes or transcripts with non-zero expression (TPM\textgreater 0.1) estimates, while light hatched bars are the remainder of the annotation set. CAT provides an annotation set with slightly more detectable genes than other annotation methods, and far more detectable isoforms. B) AugustusTMR provides a mechanism to clean up transcript projections and shift splice sites, fixing alignment errors as well as real evolutionary changes. Most of the 10,335 AugustusTMR transcripts chosen in consensus finding show an improvement in RNA-seq support, which is one of the features used in consensus finding.
 \label{fig:rat_validation}
 \end{figure}
+
+\begin{table}
+\centering
+A) Precision and recall in CAT annotation of rat\\
+\begin{tabular}{|c|c|c|c|c|} \hline
+annotation & exon precision & exon recall & intron precision & intron recall \\ \hline
+CAT & 0.703 & 0.559 & 0.861 & 0.734 \\ \hline
+MAKER & 0.507 & 0.582 & 0.610 & 0.746 \\ \hline
+\end{tabular}
+
+\vspace{5mm}
+B) Jaccard Similarity in rat annotation sets \\
+\begin{tabular}{|c|c|c|} \hline
+Annotation pair & exon Jaccard similarity & intron Jaccard similarity \\ \hline
+EnsemblV90/RefSeq & 0.658 & 0.749 \\ \hline
+CAT/EnsemblV90 & 0.649 & 0.740 \\ \hline
+CAT/RefSeq & 0.648 & 0.841 \\ \hline
+EnsemblV90/MAKER & 0.514 & 0.364 \\ \hline
+CAT/MAKER & 0.484 & 0.334 \\ \hline
+MAKER/RefSeq & 0.464 & 0.337 \\ \hline
+\end{tabular}
+\caption{Rat annotation similarity metrics}
+A) Precision is the number of coding exons or coding introns that exactly match divided by the number of exons or introns in the Ensembl annotation, while recall is the number that exactly match divided by the number of exons or introns in the CAT or MAKER annotation. B) Jaccard similarity of CDS introns and exons between rat annotation sets shows high similarity between CAT and existing Ensembl and RefSeq annotations.
+\label{table:rat_similarity}
+\end{table}
 
 \begin{figure}
 \centering
@@ -188,29 +213,37 @@ A) Jaccard similarity of CAT annotations of hg19 vs. GENCODE \\
 Exon Jaccard similarity & Intron Jaccard similarity \\ \hline
 0.617 & 0.836 \\ \hline
 \end{tabular} \\
+
 \vspace{5mm}
 B) ICE isoform validation of human annotations \\
 \begin{tabular}{|c|c|c|} \hline
 Annotation & Exactly matches annotation & Fuzzy matches annotation \\ \hline
 GENCODEv27lift37 & 14,457 (75.2\%) & 15,920 (82.8\%) \\
 CAT & 11,004 (57.2\%) & 12,911 (67.1\%) \\ \hline
+
 \end{tabular} \\
 \vspace{5mm}
 C) Isoform validation of CAT protein-coding annotations compared to hg19 \\
 \begin{tabular}{|c|c|} \hline
 Exactly matches annotation & Fuzzy matches annotation \\ \hline
 39,224 (75.2\%) & 43,099 (82.6\%) \\ \hline
+\end{tabular} \\
+\vspace{5mm}
+
+D) Precision and recall \\
+\begin{tabular}{|c|c|c|c|} \hline
+Exon Precision & Exon Recall & Intron Precision & Intron Recall \\ \hline
+0.532 & 0.688 & 0.777 & 0.912 \\ \hline
 \end{tabular}
 
 \caption{Validation of CAT using mouse-human cross annotation}
-A) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison. B) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. C) The same exact/fuzzy matching scheme was applied directly to the CAT annotation of hg19 vs. GENCODE. These comparisons were restricted to coding splices. Even at large phylogenetic distances, CAT still finds 67.1\% of ICE isoforms and 82.6\% of GENCODE isoforms.
+A) Jaccard similarity of CDS introns and exons in human annotation sets show that CAT identifies a larger portion of introns correctly than exons, with values similar to the mouse-rat comparison. B) ICE isoforms were compared in an exact and fuzzy matching scheme to both the GENCODE annotation of hg19 as well as the CAT annotation of hg19 derived from mouse. C) The same exact/fuzzy matching scheme was applied directly to the CAT annotation of hg19 vs. GENCODE. These comparisons were restricted to coding splices. Even at large phylogenetic distances, CAT still finds 67.1\% of ICE isoforms and 82.6\% of GENCODE isoforms. D) Precision and recall are measured by looking at exact matches of coding introns and exons. Precision is the number of exons or introns that exactly match divided by the number of exons or introns in the GENCODE annotation, while recall is the number that exactly match divided by the number of exons or introns in the CAT annotation.
 \label{table:validation}
 \end{table}
 
-
 To estimate the usefulness of these annotation sets, the input RNA-seq datasets were used to quantify expression of the annotation sets (Figure \ref{fig:13way}B). The main factor in measurable expression is the variety of the input RNA-seq datasets, as exemplified by the ability to measure expression of 88.9\% of genes annotated in the sheep genome. 
 
-To assess the CAT translation of annotations over large phylogenetic distances, as well as provide a baseline validation of CAT performance, the annotation of human hg19 (GRCh37) produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set for that assembly (GENCODE V27lift37). Of the 19,233 isoform level clustering (ICE) isoforms detected when running ToFu \cite{gordon2015widespread} against hg19, 12,911 (67.15\%) fuzzy matched a CAT isoform compared to 15,920 (82.8\%) of the human GENCODE annotations (Table \ref{table:validation}. Additionally, 82.6\% of CAT coding isoforms matched the coding introns of GENCODEv27lift37 isoforms. The Jaccard similarity of the human CAT annotation to the human GENCODE annotation set was similar to rat comparison.
+To assess the CAT translation of annotations over large phylogenetic distances, as well as provide a baseline validation of CAT performance, the annotation of human hg19 (GRCh37) produced in the representative mammalian genome annotation was compared to the current human GENCODE annotation set for that assembly (GENCODE V27lift37). Of the 19,233 ICE isoforms detected when running ToFu \cite{gordon2015widespread} against hg19, 12,911 (67.2\%) fuzzy matched a CAT isoform compared to 15,920 (82.8\%) of the human GENCODE annotations (Table \ref{table:validation}B). Additionally, 82.6\% of CAT coding isoforms matched the coding introns of GENCODEv27lift37 isoforms (Table \ref{table:validation}C). The Jaccard similarity of the human CAT annotation to the human GENCODE annotation set was similar to rat comparison (Table \ref{table:validation}A). Precision and recall analysis shows results similar to the rat annotation, with better matches in introns. 91.2\% of CAT introns match a GENCODE intron (Table \ref{table:validation}D).
 
 \section*{Discussion}
 
@@ -331,7 +364,11 @@ We would like to thank Brian Raney, Hiram Clawson and the rest of the UCSC Genom
 
 \section*{Supplementary Note 1}
 
-Below is a walkthrough of the CAT pipeline. Please see the README on github (\url{https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit}) for the most up-to-date information as well as practical information on how to run the pipeline. 
+Below is a walkthrough of the CAT pipeline. Please see the README on github 
+
+(\url{https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit}) 
+
+for the most up-to-date information as well as practical information on how to run the pipeline. 
 
 \subsection*{Whole-genome alignment}
 	CAT relies on a reference-free whole-genome alignment produced by the tool Progressive Cactus. One or more of the genomes in the alignment should be a high-quality reference whose existing annotations will be projected. Care should be taken when generating Cactus alignments to provide sufficient outgroup genomes. Having high-quality outgroups improves the resolution of paralogies and rearrangements.
@@ -342,10 +379,10 @@ Below is a walkthrough of the CAT pipeline. Please see the README on github (\ur
 \subsection*{transMap}
 	transMap \cite{stanke2008using,zhu2007comparative} is a process for using pairwise whole-genome alignments to project transcript annotations from one genome to another. The main program in the Kent repository for this process is pslMap. Custom software was written for CAT and included in the Kent repository, including pslMapPostChain which chains together mapped over transcript projection, and transMapPslToGenePred which converts the transcript projections to a gene model, keeping track of frame information and optionally filling in coding and noncoding gaps. Frameshifting gaps are not filled. CAT currently hard-codes those values at 50 bp and 80 bp, respectively.
   
-\subsubsection*{transMap filtering and paralogous alignment resolution}
-	After transMap projection, alignments are filtered to their most likely ortholog, and paralogies are detected. This is performed using the tool pslCDnaFilter from the Kent repository in two parameterizations. The first parameterization does not actually filter the alignment set but detects paralogies by relying on the localNearBest algorithm. This algorithm filters alignments based on windows of the input sequence. This process will keep multiple alignments for a given input sequence if they are in non-overlapping portions of the source transcript. This algorithm was originally designed for highly discontiguous assemblies. CAT leverages this concept to instead detect paralogies by looking at the difference. Alignments that localNearBest filters out are likely to be paralogous alignments and not instances of discontinuity, and so can be flagged as such. Putatively paralogous alignments are filtered further setting minSpan to 0.2 and providing a user-changeable minimum paralog coverage, which defaults to 50. minSpan is an effective filter against retroposed pseudogenes by filtering out any projection whose genomic size is smaller than 20\% of the source transcript. The minimum paralog coverage flag does not consider any alignments whose query coverage is smaller than that value as a paralog, providing extra filtering for discontinuity. The best localNearBest parameter depends on the phylogenetic distance and assembly qualities involved, and can require tuning. The default value in CAT is 0.2, which is a fairly relaxed value. Decreasing this value will increase the rate at which discontinuity is called as paralogy.
-  
-	The actual filtering of transMap projections is performed by the globalNearBest algorithm parameterized to 0, which forces pslCDnaFilter to pick the one highest scoring alignment for each input sequence. In this mode, the same minSpan value of 0.2 is used, and a minimum coverage of 10\% is required. After this step, a locus resolution step is performed to make sure that all transcripts from a given source gene end up in the same location. If globalNearBest ended up choosing multiple disjoint loci for a given gene, the highest average score locus is chosen and then lower scoring alignments for transcripts assigned elsewhere are chosen in this locus, if they exist.
+\subsubsection*{transMap filtering, paralogous alignment and gene family collapse resolution}
+	After transMap projection, alignments are filtered to their most likely ortholog, and paralogies are detected. This is performed using the tool pslCDnaFilter from the Kent repository using the globalNearBest algorithm. This algorithm scores alignments and returns the set of alignments whose score is within the user-set fraction of the highest score. Setting this value to one ensures that only one alignment is returned, and increasing values allow more alignments to be kept. This value can be tuned by the user based on phylogenetic distance -- larger values increases the rate at which alignments of related genes will be considered paralogous. After this step, coding and non-coding genes are separated and ran through the Kent tool clusterGenes either with or without the -cds flag. This tool clusters genes into loci based on exonic or CDS overlap based on the -cds flag. For each input gene, the highest scoring cluster is found and that gene is assigned to that cluster. Overlapping genes populate the paralogy field. Oppositely, for each cluster identified after paralog resolution, if there is more than one gene associated, it is marked as a gene family collapse (in other words, more than one gene had that cluster as its highest scoring cluster).
+    
+    Finally, split gene analysis uses the localNearBest algorithm to filter the input alignments. This algorithm allows for sliding window scores across a input transcript, and is designed to filter transcript projections to discontiguous assemblies. If a input transcript has multiple alignments after this filter, and they are immediately adjacent in transcript coordinate space, then this transcript is marked as being split.
 
 \subsection*{AUGUSTUS}
 	CAT runs the gene-finding tool AUGUSTUS in up to four distinct parameterizations -- AugustusTM (TM), AugustusTMR (TMR), AugustusCGP (CGP) and AugsutusPB (PB). The output of each of these modes is combined with the original transMap output in the consensus gene set finding process. The first two modes, TM/TMR are intended to reproduce the input isoform exactly, fixing regions where the alignment dropped an exon or introduced a small gap, or where the splice site may have shifted. These modes cannot detect novel genes or transcripts. In contrast, CGP/PB both can detect novel isoforms and genes. However, CGP can only detect one isoform for a locus and cannot find UTRs. CGP also cannot find genes in regions that did not align. 
