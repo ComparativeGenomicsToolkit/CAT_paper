@@ -43,14 +43,14 @@
                 labelsep=period,%
                 justification=raggedright]{caption}
 
-\RequirePackage[colorlinks=true, allcolors=blue]{hyperref}
+\RequirePackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
 
 % Set up of the bibliography style
 
 % \RequirePackage[numbers]{natbib}
-\RequirePackage[superscript,biblabel,nomove]{cite}
+\RequirePackage[biblabel,nomove]{cite}
 %% Nov 3, 2016: Support DOI
-\bibliographystyle{naturemag-doi}
+\bibliographystyle{genres}
               
 %
 % headers and footers
