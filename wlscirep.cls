@@ -43,12 +43,12 @@
                 labelsep=period,%
                 justification=raggedright]{caption}
 
-\RequirePackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
+%\RequirePackage[colorlinks=true, allcolors=blue, breaklinks=true]{hyperref}
 
 % Set up of the bibliography style
 
-% \RequirePackage[numbers]{natbib}
-\RequirePackage[biblabel,nomove]{cite}
+ \RequirePackage[round,semicolon]{natbib}
+%\RequirePackage[nomove]{cite}
 %% Nov 3, 2016: Support DOI
 \bibliographystyle{genres}
               
