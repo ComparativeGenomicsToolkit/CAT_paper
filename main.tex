@@ -14,12 +14,12 @@ basicstyle=\small\ttfamily,
 columns=flexible,
 breaklines=true
 }
+
 \newcommand{\beginsupplement}{%
     \setcounter{table}{0}
     \renewcommand{\thetable}{S\arabic{table}}%
     \setcounter{figure}{0}
     \renewcommand{\thefigure}{S\arabic{figure}}%
-    \setcounter{page}{0}
    }
 
 \title{Comparative Annotation Toolkit (CAT) - simultaneous clade and personal genome annotation}
@@ -81,9 +81,9 @@ CAT provides a software toolkit designed to perform end-to-end annotation; Figur
 
 TransMap \citep{stanke2008using,zhu2007comparative} is used to project existing annotations between genomes using the Progressive Cactus alignment. TransMap projections are filtered based on a user-tunable flag for minimum coverage, and then the single highest scoring alignment is chosen. If this results in transcripts for a given gene mapping to multiple loci, these are resolved to one locus based on the highest average score of a locus, rescuing lower scoring alignments. 
 
-Based on input parameters, CAT will run AUGUSTUS in up to four distinct parameterizations, two of which rely on transMap projections (AugustusTMR) and two that perform \textit{ab initio} predictions (AugustusCGP and AugustusPB) using extrinsic information to guide prediction. AugustusCGP performs simultaneous comparative prediction  \citep{konig2015simultaneous} on all aligned genomes, while AugustusPB uses long read RNA-seq to discover novel isoforms. The output of these modes of AUGUSTUS are evaluated alongside the original transMap projections using a combination of classifiers as well as the output from homGeneMapping  \citep{stanke2004augustus}, which uses the Cactus alignments to project features such as annotations and RNA-seq support between the input genomes. AugustusCGP and AugustusPB transcript predictions are assigned to transMap genes based on genomic and exonic overlap. If they overlap projections that were filtered out in the paralog resolution process, then they are flagged as putatively paralogous, while if they do not overlap any transMap projections they are flagged as putatively novel. A consensus-finding algorithm combines these gene sets.
+Based on input parameters, CAT will run AUGUSTUS in up to four distinct parameterizations, two of which rely on transMap projections (AugustusTMR) and two that perform \textit{ab initio} predictions (AugustusCGP and AugustusPB) using extrinsic information to guide prediction. AugustusCGP performs simultaneous comparative prediction  \citep{konig2015simultaneous} on all aligned genomes, while AugustusPB uses long read RNA-seq to discover novel isoforms. The output of these modes of AUGUSTUS are evaluated alongside the original transMap projections using a combination of classifiers as well as the output from homGeneMapping \citep{stanke2004augustus}, which uses the Cactus alignments to project features such as annotations and RNA-seq support between the input genomes. AugustusCGP and AugustusPB transcript predictions are assigned to transMap genes based on genomic and exonic overlap. If they overlap projections that were filtered out in the paralog resolution process, then they are flagged as putatively paralogous, while if they do not overlap any transMap projections they are flagged as putatively novel. A consensus-finding algorithm combines these gene sets.
 
-The consensus finding algorithm combines all sources of transcript evidence into an annotation set. On a per-gene basis, it evaluates the transMap transcripts for passing user tunable flags for RNA-seq and annotation support. It then considers the inclusion of \textit{ab initio} transcripts based on their assignment to this locus and their contribution of novel splice junctions supported by RNA-seq or Iso-Seq. Finally, it evaluates \textit{ab inito} transcripts not assigned to a gene as novel loci if they are supported by RNA-seq or Iso-Seq as defined by user-tunable flags. For a more detailed description of CAT see Supplementary Note 1.
+The consensus finding algorithm combines all sources of transcript evidence into an annotation set. On a per-gene basis, it evaluates the transMap transcripts for passing user tunable flags for RNA-seq and annotation support. It then considers the inclusion of \textit{ab initio} transcripts based on their assignment to this locus and their contribution of novel splice junctions supported by RNA-seq or Iso-Seq. Finally, it evaluates \textit{ab inito} transcripts not assigned to a gene as novel loci if they are supported by RNA-seq or Iso-Seq as defined by user-tunable flags. For a more detailed description of CAT see Supplementary Methods.
 
 
 \subsection*{Annotation of great apes}
@@ -123,7 +123,7 @@ We compared CDS exon and CDS intron predictions between annotation sets (Table \
   
 The input RNA-seq dataset was used for isoform quantification against the CAT, MAKER, Ensembl and RefSeq transcriptomes (Figure \ref{fig:rat_validation}A). CAT identified 1,881 protein-coding genes and 1,011 lncRNAs with measurable expression not present in either Ensembl or RefSeq. CAT also identified 27,712 expressed coding splice junctions not in the union of RefSeq and Ensembl, for a total of 21,267 novel expressed isoforms. 5,526 of the 13,651 loci unique to CAT had measurable expression. 
 
-AugustusTMR, which uses transMap and RNA-seq, provides CAT with a way to improve transcript predictions projected between species. Comparing the 10,335 multi-exon protein-coding transcripts in which the AugustusTMR prediction differed from the input transMap projection, we see considerable overall improvement in resulting RNA-seq support of predicted splice boundaries in the AugustusTMR transcripts (Figure \ref{fig:rat_validation}B). 
+AugustusTMR, which uses transMap and RNA-seq, provides CAT with a way to improve transcript predictions projected between species. Comparing the 9,532 multi-exon protein-coding transcripts in which the AugustusTMR prediction differed from the input transMap projection, we see considerable overall improvement in resulting RNA-seq support of predicted splice boundaries in the AugustusTMR transcripts (Figure \ref{fig:rat_validation}B). 
 
 \subsection*{Annotation of a diverse set of mammals}
 
