@@ -57,7 +57,7 @@
 %
 \RequirePackage{fancyhdr}  % custom headers/footers
 \RequirePackage{lastpage}  % Number of pages in the document
-\pagestyle{fancy}          % Enables the custom headers/footers
+\pagestyle{empty}          % Enables the custom headers/footers
 % Headers
 \lhead{}%
 \chead{}%
